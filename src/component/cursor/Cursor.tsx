@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { DEFAULT_POSITION, Position, Translation } from "../../assets/scripts/utils";
 import "./Cursor.scss";
-import { gsap } from "gsap";
+import { Back, Power3, gsap } from "gsap";
 
 
 const CLASSES = {
@@ -17,16 +17,24 @@ const DEFAULT_TRANSLATION: Translation = {
 }
 
 export interface CursorProps { }
+export interface CursorControl { 
+  open: (tooltip?: ReactNode) => void,
+  close: () => void
+}
 
-export default function Cursor({ }: CursorProps) {
+export const Cursor = forwardRef<CursorControl, CursorProps>((props, ref) => {
   const [targetPosition, setTargetPosition] = useState<Position>(DEFAULT_POSITION);
   const [renderedPosition, setRenderedPosition] = useState<Position>(DEFAULT_POSITION);
+  const [tooltip, setTooltip] = useState<ReactNode>(null);
   
+  const pointerTimelineRef = useRef<gsap.core.Timeline>(gsap.timeline());
+  const tooltipTimelineRef = useRef<gsap.core.Timeline>(gsap.timeline());
   const tooltipRef = useRef<HTMLDivElement>(null);
   const positionRef = useRef<Position>(renderedPosition);
   const translationRef = useRef<Translation>(DEFAULT_TRANSLATION);
   const requestRef = useRef<number>();
-  const speed = .085;
+  const speed = .067;
+
 
   const handleMouseMove = (e: MouseEvent) => {
     setTargetPosition({ x: e.clientX, y: e.clientY });
@@ -81,6 +89,27 @@ export default function Cursor({ }: CursorProps) {
     requestRef.current = requestAnimationFrame(animate);
   }
 
+  const open = (tt?: ReactNode) => {
+    pointerTimelineRef?.current.kill();
+    pointerTimelineRef.current = gsap.timeline();
+    pointerTimelineRef.current.to(`.${CLASSES.POINTER}`,  { duration: .4, ease: Back.easeOut.config(3), scale: 2 });
+    
+    if (tt) {
+      tooltipTimelineRef?.current
+        .call(() => setTooltip(tt))
+        .to(`.${CLASSES.TOOLTIP}`, { duration: .6, ease: Back.easeOut.config(3), scale: 1 });
+    }
+  }
+
+  const close = () => {
+    console.log("CLOSE");
+    pointerTimelineRef.current.to(`.${CLASSES.POINTER}`,  { duration: .4, ease: Back.easeIn.config(3), scale: 1 });
+    if (tooltip) {
+      tooltipTimelineRef?.current
+        .to(`.${CLASSES.TOOLTIP}`, { duration: .2, ease: Back.easeIn.config(3), scale: 0 })
+    }
+  }
+
   useEffect(() => {
     window.addEventListener('mousemove', handleMouseMove);
 
@@ -96,10 +125,20 @@ export default function Cursor({ }: CursorProps) {
     };
   }, [targetPosition, speed]);
 
+  useImperativeHandle(ref, () => ({
+    open: open,
+    close: close,
+    setTooltip: (tooltip: ReactNode) => setTooltip(tooltip)
+  }));
+
   return (
     <div className={CLASSES.HOST} style={{ left: `${renderedPosition.x}px`, top: `${renderedPosition.y}px` }}>
       <div className={CLASSES.POINTER}/>
-      <div className={CLASSES.TOOLTIP} ref={tooltipRef}/>
+      <div className={CLASSES.TOOLTIP} ref={tooltipRef}>
+        {tooltip}
+      </div>
     </div>
   )
-} 
+});
+
+export default Cursor;

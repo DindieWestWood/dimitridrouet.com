@@ -5,7 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: $cursor-elevation;  
+  z-index: $cursor-elevation;
+  pointer-events: none; 
 }
 
 .cursor-pointer {
@@ -15,7 +16,6 @@
 
   background-color: rgba(0, 0, 0, .1);
   border-radius: 50%;
-  pointer-events: none;
 }
 
 .cursor-tooltip {
@@ -27,6 +27,8 @@
 
   background-color: rgba(0, 0, 0, .1);
   border-radius: .5rem;
+
+  scale: 0;
 }
 
 .open {
