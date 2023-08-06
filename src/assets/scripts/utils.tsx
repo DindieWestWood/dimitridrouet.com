@@ -4,7 +4,8 @@ import { CursorControl } from "../../component/cursor/Cursor";
 export const CLASSES = {
   BACKGROUND: "background",
   HOVER_EFFECT: "hover-effect",
-  ACTIVE_EFFECT: "active-effect"
+  ACTIVE_EFFECT: "active-effect",
+  BACKGROUND_SHAPE: "background-shape"
 }
 
 export interface Position {
@@ -22,6 +23,10 @@ export interface CursorTriggerProps {
   cursorRef?: RefObject<CursorControl>;
   tooltip?: ReactNode;
   icon?: string;
+}
+
+export interface BackgroundShapeProps {
+
 }
 
 export const DEFAULT_POSITION: Position = { x: 0, y: 0 }

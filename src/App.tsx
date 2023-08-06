@@ -1,16 +1,19 @@
-import { useRef } from "react"
-import AnimatedBackground from "./component/animated-background/AnimatedBackground"
-import Button from "./component/button/Button"
-import Cursor, { CursorControl } from "./component/cursor/Cursor"
+import { useRef } from "react";
+import Button from "./component/button/Button";
+import Cursor, { CursorControl } from "./component/cursor/Cursor";
+import BackgroundCircle from "./component/background-circle/background-circle";
+import RotatorEffect from "./component/rotator-effect/rotator-effect";
 
 function App() {
   const cursorRef = useRef<CursorControl>(null);
 
   return (
     <>
-      <AnimatedBackground />
+      <RotatorEffect>
+        <BackgroundCircle />
+      </RotatorEffect>
       <Cursor ref={cursorRef}/>
-      <Button cursorRef={cursorRef} tooltip="Tooltip">With Tooltip Bitch !</Button>
+      {/* <Button cursorRef={cursorRef} tooltip="Tooltip">With Tooltip Bitch !</Button> */}
     </>
   )
 }

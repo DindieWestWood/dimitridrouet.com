@@ -1,7 +1,7 @@
 import { ReactNode, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { DEFAULT_POSITION, Position, Translation } from "../../assets/scripts/utils";
 import "./Cursor.scss";
-import { Back, Power3, gsap } from "gsap";
+import { Back, gsap } from "gsap";
 
 
 const CLASSES = {
