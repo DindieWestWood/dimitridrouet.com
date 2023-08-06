@@ -8,20 +8,16 @@
   padding: 0;
 }
 
-html {
-  min-height: 100vh;
-}
-
 body {
-  min-height: 100vh;
   background-color: $background;
 }
 
-#root {
+section {
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
 }
 
 .background-shape {
@@ -34,4 +30,24 @@ body {
   filter: contrast(150%) brightness(150%);
   background: linear-gradient(45deg, rgba(91,28,158,1), rgba(140,68,217,0)),
               url(assets/images/textures/noise.svg);
+}
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
