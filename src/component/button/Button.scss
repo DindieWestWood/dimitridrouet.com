@@ -18,11 +18,11 @@ button {
   background: unset;
   color: $light-primary-text;
   font-family: "Martian Mono";
-  font-size: 1rem;
+  font-size: .8rem;
   font-weight: 400;
   text-transform: uppercase;
 
-  .background {
+  .button-background {
     position: absolute;
     inset: 0;
     z-index: ($button-elevation - 4);

@@ -1,10 +1,12 @@
 .rotator-effect-container {
+  width: fit-content;
+  height: fit-content;
 
   .rotator-effect {
     --rotation: 0deg;
     --translation: 0rem;
     transform: rotate(var(--rotation)) translateX(var(--translation));
-
+    
     .rotator-effect-inner {
       transform: rotate(calc(var(--rotation) * -1.15));
     }

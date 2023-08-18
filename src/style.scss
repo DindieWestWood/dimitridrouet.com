@@ -1,3 +1,4 @@
+@import "./assets/stylesheets/fonts.scss";
 @import "./assets/stylesheets/colors.scss";
 @import "./assets/stylesheets/elevations.scss";
 * {
@@ -12,12 +13,55 @@ body {
   background-color: $background;
 }
 
+#root {
+  position: relative;
+  height: fit-content;
+  border: 2px solid coral;
+}
+
 section {
   width: 100%;
   min-height: 100vh;
+  padding: 5vw;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+h1 {
+  font-family: $martian-mono;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: min(max(8.3vw, 3rem), 11rem);//min(max(10.5vw, 4.5rem), 11rem);
+}
+
+h2 {
+  font-family: $martian-mono;
+  font-weight: 300;
+  font-size: min(max(4vw, 1.4rem), 5.3rem);
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 2rem;
+}
+
+.cover-title {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 2rem;
+  gap: .5rem;
+}
+
+.index {
+  font-weight: 400;
+  font-family: $martian-mono;
+  font-size: .8rem;
+  color: $dark-secondary-text;
 }
 
 .background-shape {

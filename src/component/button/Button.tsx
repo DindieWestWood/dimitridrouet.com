@@ -1,11 +1,15 @@
 import { ReactNode, useRef } from "react";
 import "./Button.scss";
 import { Power3, gsap } from "gsap";
-import { CLASSES, CursorTriggerProps, Position } from "../../assets/scripts/utils";
+import { CLASSES as GENERAL_CLASSES, CursorTriggerProps, Position } from "../../assets/scripts/utils";
 
 export interface ButtonProps extends CursorTriggerProps {
   handleClick?: () => void,
   children?: ReactNode,
+}
+
+const CLASSES = {
+  BACKGROUND: "button-background"
 }
 
 export default function Button ({handleClick, tooltip, cursorRef, children}: ButtonProps) {  
@@ -59,8 +63,8 @@ export default function Button ({handleClick, tooltip, cursorRef, children}: But
       onPointerDown={($event) => triggerEffect($event, activeEffectRef, activeTimelineRef, true)}
       onPointerUp={($event) => triggerEffect($event, activeEffectRef, activeTimelineRef, false)}>
         <div className={CLASSES.BACKGROUND}/>
-        <div className={CLASSES.HOVER_EFFECT} ref={hoverEffectRef}/>
-        <div className={CLASSES.ACTIVE_EFFECT} ref={activeEffectRef}/>
+        <div className={GENERAL_CLASSES.HOVER_EFFECT} ref={hoverEffectRef}/>
+        <div className={GENERAL_CLASSES.ACTIVE_EFFECT} ref={activeEffectRef}/>
         {children}
     </button>
   );

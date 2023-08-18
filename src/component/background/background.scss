@@ -1,0 +1,8 @@
+@import "../../assets/stylesheets/elevations.scss";
+
+.background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: $background-elevation;
+}
