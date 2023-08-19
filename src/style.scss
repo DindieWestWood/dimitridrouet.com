@@ -11,6 +11,8 @@
 
 body {
   background-color: $background;
+  font-family: $martian-mono;
+  font-weight: 300;
 }
 
 #root {
@@ -33,7 +35,7 @@ h1 {
   font-family: $martian-mono;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: min(max(8.3vw, 3rem), 11rem);//min(max(10.5vw, 4.5rem), 11rem);
+  font-size: min(max(8.3vw, 3rem), 11rem);
 }
 
 h2 {
