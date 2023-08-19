@@ -1,0 +1,40 @@
+@import "../../../assets/stylesheets/elevations.scss";
+
+.drag-and-drop-container {
+  position: relative;
+  display: flex;
+  z-index: $drag-and-drop-elevation;
+}
+
+.drag-and-drop-placeholder {
+  position: absolute;
+  inset: .25rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  border: 1px dashed;
+  border-radius: .25rem;
+  text-align: center;
+
+  opacity: .5;
+}
+
+.drag-and-drop-target {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  background: lightgray;
+
+  border-radius: .25rem;
+
+  transition: opacity 200ms ease-in-out;
+}
+
+.is-dragging {
+  opacity: .8;
+}
+
