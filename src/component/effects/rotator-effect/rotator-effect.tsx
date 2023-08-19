@@ -10,6 +10,7 @@ const CLASSES = {
 
 export interface RotatorEffect {
   speed?: number;
+  clockwise?: boolean;
   minTranslation?: number;
   maxTranslation?: number;
   children?: ReactNode;
@@ -30,9 +31,7 @@ export default function RotatorEffect({speed = 1, minTranslation = 2, maxTransla
   return (
     <div className={CLASSES.CONTAINER}>
       <div className={CLASSES.ROTATOR} ref={rotatorRef}>
-        <div className={CLASSES.INNER}>
           {children}
-        </div>
       </div>
     </div>
   );

@@ -26,7 +26,8 @@ export interface CursorTriggerProps {
 }
 
 export interface BackgroundShapeProps {
-
+  width?: string,
+  height?: string
 }
 
 export const DEFAULT_POSITION: Position = { x: 0, y: 0 }
