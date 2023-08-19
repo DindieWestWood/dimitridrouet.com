@@ -1,11 +1,12 @@
 import { useRef } from "react";
 import Button from "./component/button/Button";
 import Cursor, { CursorControl } from "./component/cursor/Cursor";
-import BackgroundCircle from "./component/background-circle/background-circle";
-import RotatorEffect from "./component/rotator-effect/rotator-effect";
-import ParallaxEffect from "./component/parallax-effect/parallax-effect";
+import BackgroundCircle from "./component/background-shapes/background-circle/background-circle";
+import RotatorEffect from "./component/effects/rotator-effect/rotator-effect";
+import ParallaxEffect from "./component/effects/parallax-effect/parallax-effect";
 import Background from "./component/background/background";
-import DragAndDropContainer from "./component/drag-and-drop/container/drag-and-drop-container";
+import DragAndDropContainer from "./component/drag-and-drop/container/Drag-and-drop-container";
+import SelfRotatorEffect from "./component/effects/self-rotator-effect/self-rotator-effect";
 
 function App() {
   const cursorRef = useRef<CursorControl>(null);
@@ -15,7 +16,9 @@ function App() {
       <Background>
         <ParallaxEffect>
           <RotatorEffect>
-            <BackgroundCircle />
+            <SelfRotatorEffect>
+              <BackgroundCircle />
+            </SelfRotatorEffect>
           </RotatorEffect>
         </ParallaxEffect>
       </Background>
@@ -23,7 +26,7 @@ function App() {
         <div className="cover">
           <div className="cover-title">
             <p className="index">01/</p>
-            <DragAndDropContainer width="200px" height="200px"
+            <DragAndDropContainer  width="200px" height="200px"
                                   message="The picture was here"
                                   cursorRef={cursorRef}/>
                                   {/* placeholderTooltip="Click to bring back the picture"
