@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import Cursor, { CursorControl } from "./component/cursor/Cursor";
-import { HomePageComponent } from "./pages/home-page";
+import { HomePageComponent } from "./pages/home-page/home-page";
 
 function App() {
   const cursorRef = useRef<CursorControl>(null);

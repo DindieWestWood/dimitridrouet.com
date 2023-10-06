@@ -58,7 +58,7 @@ export default function DragAndDropContainer({width, height, message, children, 
     currentPos.current = { x: 0, y: 0 };
 
     targetRef.current?.classList.remove(CLASSES.IS_DRAGGING);
-    if (isTargetOnPlaceholder()) resetTarget();
+    if (isPointerOnPlaceholder({ x: event.clientX, y: event.clientY })) resetTarget();
   }
 
   function handlePointerMove(event: PointerEvent) : void {
@@ -75,17 +75,16 @@ export default function DragAndDropContainer({width, height, message, children, 
     resetTarget();
   }
 
-  function isTargetOnPlaceholder() : boolean {
+  function isPointerOnPlaceholder(position: Position) : boolean {
     const placeholderRect = placeholderRef.current?.getBoundingClientRect();
-    const targetRect = targetRef.current?.getBoundingClientRect();
 
-    if (!placeholderRect || !targetRect) return false;
+    if (!placeholderRect) return false;
 
     return !(
-      targetRect.left > placeholderRect.right ||
-      targetRect.right < placeholderRect.left ||
-      targetRect.top > placeholderRect.bottom ||
-      targetRect.bottom < placeholderRect.top
+      position.x > placeholderRect.right ||
+      position.x < placeholderRect.left ||
+      position.y > placeholderRect.bottom ||
+      position.y < placeholderRect.top
     );
 
   }

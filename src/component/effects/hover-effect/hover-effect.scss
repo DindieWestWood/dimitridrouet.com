@@ -1,0 +1,47 @@
+.hover-effect-container {
+  position: relative;
+  display: flex;
+
+  perspective: 800px;
+}
+
+.hover-effect {
+  --rotateX: 0deg;
+  --rotateY: 0deg;
+  --glowOrigin: 50% 50%;
+  --smoothRatio: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+  background-color: lightgray;
+  border-radius: .5rem;
+  overflow: hidden;
+  transform: rotateX(calc(var(--rotateX) * var(--smoothRatio)))
+             rotateY(calc(var(--rotateY) * var(--smoothRatio)));
+
+  transition: box-shadow 600ms ease-in-out;
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(farthest-corner circle at var(--glowOrigin), rgba(255, 255, 255, .8) 10%, rgba(255, 255, 255, .65) 20%, rgba(0, 0, 0, .5) 90%);
+    mix-blend-mode: soft-light;
+    opacity: var(--smoothRatio);
+  }
+
+  img{
+    pointer-events: none;
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+  }  
+}
+

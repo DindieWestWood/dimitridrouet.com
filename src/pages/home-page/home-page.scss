@@ -1,0 +1,27 @@
+.home-cover {
+  justify-content: center;
+  gap: 2rem;
+}
+
+.home-cover-headlines {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 2rem;
+  gap: .5rem;
+}
+
+.home-work {
+  display: grid;
+  grid-auto-rows: auto;
+  width: 100%;
+  gap: 1rem;
+}
+
+.home-description {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+}
+

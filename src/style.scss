@@ -13,12 +13,12 @@ body {
   background-color: $background;
   font-family: $martian-mono;
   font-weight: 300;
+  overflow-x: hidden;
 }
 
 #root {
   position: relative;
   height: fit-content;
-  border: 2px solid coral;
 }
 
 section {
@@ -27,42 +27,35 @@ section {
   padding: 5vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  border: 2px solid purple;
 }
 
 h1 {
-  font-family: $martian-mono;
-  text-transform: uppercase;
-  font-weight: 500;
   font-size: min(max(8.3vw, 3rem), 11rem);
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 h2 {
-  font-family: $martian-mono;
-  font-weight: 300;
   font-size: min(max(4vw, 1.4rem), 5.3rem);
+  font-weight: 300;
 }
 
-.cover {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 2rem;
+h3 {
+  font-size: min(max(4vw, 1.4rem), 5.3rem);
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
-.cover-title {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 2rem;
-  gap: .5rem;
+p {
+  font-size: min(max(2vw, .8rem), 1rem);
+  font-weight: 300;
 }
 
 .index {
-  font-weight: 400;
-  font-family: $martian-mono;
   font-size: .8rem;
+  font-weight: 400;
   color: $dark-secondary-text;
 }
 
@@ -73,7 +66,12 @@ h2 {
   opacity: .3;
   filter: contrast(150%) brightness(150%);
   background: linear-gradient(45deg, rgba(91,28,158,1), rgba(140,68,217,0)),
-              url(assets/images/textures/noise.svg);
+              url(assets/images/textures/noise.svg) repeat;
+}
+
+.project-grid {
+  display: grid;
+  gap: 1rem;
 }
 
 html.lenis {
@@ -94,4 +92,16 @@ html.lenis {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+@media screen and (min-width: 800px) {
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .project-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }  
 }
