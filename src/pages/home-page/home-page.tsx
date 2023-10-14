@@ -11,6 +11,7 @@ import DragAndDropContainer from "../../component/drag-and-drop/container/Drag-a
 import Button from "../../component/button/Button";
 import HoverEffect from "../../component/effects/hover-effect/hover-effect";
 import PROFILE_PICTURE from '../../assets/images/profile-picture.jpg';
+import ProjectSelector from "../../component/project/selector/project-selector";
 export interface PageProps extends CursorTriggerProps {}
 
 export function HomePageComponent({cursorRef}: PageProps) {
@@ -41,12 +42,9 @@ export function HomePageComponent({cursorRef}: PageProps) {
       <section className="home-work">
           <div className="project-grid">
             <div className="home-description">
-              <div>
                 <p className="index">002/</p>
-                <h3>Work</h3>
-              </div>
-              <p>6+ years of experience in the field of UX and UI working inside different organisations for various clients. I’m currently working as a freelance.</p>
-              <Button cursorRef={cursorRef}>See all project</Button>
+                <ProjectSelector label="Projects" active={true}/>
+                <ProjectSelector label="Lab" active={false}/>
             </div>
           </div>
       </section>

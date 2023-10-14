@@ -1,0 +1,21 @@
+@import "../../../assets/stylesheets/colors.scss"; 
+
+.prj-sel-container {
+  display: flex;
+  gap: .5rem;
+  align-items: baseline;
+
+  cursor: pointer;
+  opacity: .15;
+  transition: opacity 200ms ease-in-out;
+
+  &.active {
+    opacity: 1;
+    pointer-events: none;
+    h3 { color: $main-500; }
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}

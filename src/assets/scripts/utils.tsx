@@ -5,6 +5,8 @@ export const CLASSES = {
   BACKGROUND: "background",
   HOVER_EFFECT: "hover-effect",
   ACTIVE_EFFECT: "active-effect",
+  ACTIVE: "active",
+  INDEX: "index",
   BACKGROUND_SHAPE: "background-shape"
 }
 
