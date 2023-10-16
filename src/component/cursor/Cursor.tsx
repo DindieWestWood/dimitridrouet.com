@@ -1,13 +1,13 @@
 import { ReactNode, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { DEFAULT_POSITION, Position, Translation } from "../../assets/scripts/utils";
 import "./Cursor.scss";
-import { Back, gsap } from "gsap";
-
+import { Power3, gsap } from "gsap";
+import CursorPointer, { open as openCursor, close as closeCursor } from "./cursor-pointer/cursor-pointer";
+import CursorTooltip from "./cursor-tooltip/cursor-tooltip";
+import { CLASSES as TOOLTIP_CLASSES } from "./cursor-tooltip/cursor-tooltip"; 
 
 const CLASSES = {
-  HOST: "cursor",
-  POINTER: "cursor-pointer",
-  TOOLTIP: "cursor-tooltip"
+  HOST: "cursor"
 }
 
 const DEFAULT_TRANSLATION: Translation = {
@@ -25,15 +25,12 @@ export interface CursorControl {
 export const Cursor = forwardRef<CursorControl, CursorProps>((props, ref) => {
   const [targetPosition, setTargetPosition] = useState<Position>(DEFAULT_POSITION);
   const [renderedPosition, setRenderedPosition] = useState<Position>(DEFAULT_POSITION);
-  const [tooltip, setTooltip] = useState<ReactNode>(null);
   
-  const pointerTimelineRef = useRef<gsap.core.Timeline>(gsap.timeline());
-  const tooltipTimelineRef = useRef<gsap.core.Timeline>(gsap.timeline());
-  const tooltipRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<CursorControl>(null);
   const positionRef = useRef<Position>(renderedPosition);
   const translationRef = useRef<Translation>(DEFAULT_TRANSLATION);
   const requestRef = useRef<number>();
-  const speed = .067;
+  const speed = .1;
 
 
   const handleMouseMove = (e: MouseEvent) => {
@@ -79,7 +76,7 @@ export const Cursor = forwardRef<CursorControl, CursorProps>((props, ref) => {
 
     const newTranslation = { x: cTx + dTx, y: cTy + dTy, z: 0 }
     translationRef.current = newTranslation;
-    if (tooltipRef) gsap.set(tooltipRef.current, { x: ` ${newTranslation.x}%`, y: `${newTranslation.y}%`, transformOrigin: origin });
+    if (tooltipRef) gsap.set(`.${TOOLTIP_CLASSES.HOST}`, { x: ` ${newTranslation.x}%`, y: `${newTranslation.y}%`, transformOrigin: origin });
   }
 
   const animate = () => {
@@ -90,24 +87,17 @@ export const Cursor = forwardRef<CursorControl, CursorProps>((props, ref) => {
   }
 
   const open = (tt?: ReactNode) => {
-    pointerTimelineRef?.current.kill();
-    pointerTimelineRef.current = gsap.timeline();
-    pointerTimelineRef.current.to(`.${CLASSES.POINTER}`,  { duration: .4, ease: Back.easeOut.config(3), scale: 2 });
-    
-    if (tt) {
-      tooltipTimelineRef?.current
-        .call(() => setTooltip(tt))
-        .to(`.${CLASSES.TOOLTIP}`, { duration: .6, ease: Back.easeOut.config(3), scale: 1 });
-    }
+    gsap.killTweensOf(`.${CLASSES.HOST}`, "opacity");
+    gsap.to(`.${CLASSES.HOST}`, { duration: .3, ease: Power3.easeInOut, opacity: .8 });
+    openCursor();
+    if (tt) tooltipRef?.current?.open(tt);
   }
 
   const close = () => {
-    console.log("CLOSE");
-    pointerTimelineRef.current.to(`.${CLASSES.POINTER}`,  { duration: .4, ease: Back.easeIn.config(3), scale: 1 });
-    if (tooltip) {
-      tooltipTimelineRef?.current
-        .to(`.${CLASSES.TOOLTIP}`, { duration: .2, ease: Back.easeIn.config(3), scale: 0 })
-    }
+    gsap.killTweensOf(`.${CLASSES.HOST}`, "opacity");
+    gsap.to(`.${CLASSES.HOST}`, { duration: .3, ease: Power3.easeInOut, opacity: .2 });
+    closeCursor();
+    tooltipRef?.current?.close();
   }
 
   useEffect(() => {
@@ -127,16 +117,13 @@ export const Cursor = forwardRef<CursorControl, CursorProps>((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     open: open,
-    close: close,
-    setTooltip: (tooltip: ReactNode) => setTooltip(tooltip)
+    close: close
   }));
 
   return (
     <div className={CLASSES.HOST} style={{ left: `${renderedPosition.x}px`, top: `${renderedPosition.y}px` }}>
-      <div className={CLASSES.POINTER}/>
-      <div className={CLASSES.TOOLTIP} ref={tooltipRef}>
-        {tooltip}
-      </div>
+      <CursorPointer/>
+      <CursorTooltip ref={tooltipRef}/>
     </div>
   )
 });

@@ -28,7 +28,6 @@ section {
   display: flex;
   flex-direction: column;
   align-items: start;
-  border: 2px solid purple;
 }
 
 h1 {
@@ -92,6 +91,10 @@ html.lenis {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+.one-line {
+  white-space: nowrap;
 }
 
 @media screen and (min-width: 800px) {

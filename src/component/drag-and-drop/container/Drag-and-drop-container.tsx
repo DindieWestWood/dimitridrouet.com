@@ -1,13 +1,17 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, RefObject, useEffect, useRef, useState } from "react";
 import "./drag-and-drop-container.scss";
-import { CursorTriggerProps, Position } from "../../../assets/scripts/utils";
+import { Position } from "../../../assets/scripts/utils";
 import { Power3, gsap } from "gsap";
+import CursorTrigger, { CursorStyle } from "../../cursor-trigger/cursor-trigger";
+import { CursorControl } from "../../cursor/Cursor";
+import { CLASSES as GENERAL_CLASSES } from "../../../assets/scripts/utils";
 
-export interface DragAndDropContainerProps extends CursorTriggerProps {
+export interface DragAndDropContainerProps {
   width: string,
   height: string,
   children?: ReactNode,
   message?: string,
+  cursorRef?: RefObject<CursorControl>;
   placeholderTooltip?: string;
   targetTooltip?: string;
 }
@@ -22,6 +26,7 @@ export const CLASSES = {
 export default function DragAndDropContainer({width, height, message, children, cursorRef, placeholderTooltip, targetTooltip}: DragAndDropContainerProps) {
   const placeholderRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLDivElement>(null);
+  const [dragging, setDragging] = useState(false);
   const isDragging = useRef(false);
   const initialPos = useRef<Position>({ x: 0, y: 0 });
   const currentPos = useRef<Position>({ x: 0, y: 0 });
@@ -42,6 +47,7 @@ export default function DragAndDropContainer({width, height, message, children, 
 
   function handlePointerDown(event: PointerEvent) : void {
     isDragging.current = true;
+    setDragging(isDragging.current);
     initialPos.current = { x: event.clientX, y: event.clientY };
     currentPos.current = { x: event.clientX, y: event.clientY };
     targetRef.current?.classList.add(CLASSES.IS_DRAGGING);
@@ -49,6 +55,7 @@ export default function DragAndDropContainer({width, height, message, children, 
 
   function handlePointerUp(event: PointerEvent) : void {
     isDragging.current = false;
+    setDragging(isDragging.current);
     const deltaPos = getDeltaPosition();
     offset.current = { 
       x: offset.current.x + deltaPos.x,
@@ -115,36 +122,18 @@ export default function DragAndDropContainer({width, height, message, children, 
     }
   }
 
-  function handlePointerEnterPlaceholder() {
-    cursorRef?.current?.open(placeholderTooltip);
-  }
-
-  function handlePointerLeavePlaceholder() {
-    cursorRef?.current?.close();
-  }
-  
-  function handlePointerEnterTarget() {
-    cursorRef?.current?.open(targetTooltip);
-  }
-  
-  function handlePointerLeaveTarget() {
-    cursorRef?.current?.close();
-  }
-
   return (
     <div className={CLASSES.HOST} style={{width: width, height: height}}>
-      <div className={CLASSES.PLACEHOLDER} 
-           ref={placeholderRef}
-           onPointerEnter={handlePointerEnterPlaceholder}
-           onPointerLeave={handlePointerLeavePlaceholder}>
-        {message}
-      </div>
-      <div className={CLASSES.TARGET} 
-           ref={targetRef}
-           onPointerEnter={handlePointerEnterTarget}
-           onPointerLeave={handlePointerLeaveTarget}>
-        {children}
-      </div>
+      <CursorTrigger cursorRef={cursorRef} style={CursorStyle.POINTER} toolip={<p className={GENERAL_CLASSES.ONE_LINE}>{placeholderTooltip}</p>}>
+        <div className={CLASSES.PLACEHOLDER} ref={placeholderRef}>
+            {message}
+        </div>
+      </CursorTrigger>
+      <CursorTrigger cursorRef={cursorRef} style={dragging ? CursorStyle.GRABBING : CursorStyle.GRAB} toolip={<p className={GENERAL_CLASSES.ONE_LINE}>{targetTooltip}</p>}>
+        <div className={CLASSES.TARGET} ref={targetRef}>
+          {children}
+        </div>
+      </CursorTrigger>
     </div>
   );
 }

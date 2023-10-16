@@ -6,33 +6,7 @@
   align-items: center;
   justify-content: center;
   z-index: $cursor-elevation;
-  pointer-events: none; 
+  pointer-events: none;
+  opacity: .1;
 }
 
-.cursor-pointer {
-  position: absolute;
-  width: 1rem;
-  height: 1rem;
-
-  background-color: rgba(0, 0, 0, .1);
-  border-radius: 50%;
-}
-
-.cursor-tooltip {
-  position: absolute;
-  width: fit-content;
-  height: fit-content;
-
-  padding: 1rem;
-
-  background-color: rgba(0, 0, 0, .1);
-  border-radius: .5rem;
-
-  scale: 0;
-}
-
-.open {
-  .cursor-pointer {
-    transform: scale(1.5);
-  }
-}

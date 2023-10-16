@@ -12,6 +12,7 @@ import Button from "../../component/button/Button";
 import HoverEffect from "../../component/effects/hover-effect/hover-effect";
 import PROFILE_PICTURE from '../../assets/images/profile-picture.jpg';
 import ProjectSelector from "../../component/project/selector/project-selector";
+import CursorTrigger, { CursorStyle } from "../../component/cursor-trigger/cursor-trigger";
 export interface PageProps extends CursorTriggerProps {}
 
 export function HomePageComponent({cursorRef}: PageProps) {
@@ -29,7 +30,7 @@ export function HomePageComponent({cursorRef}: PageProps) {
       <section className="home-cover">
           <div className="home-cover-headlines">
             <p className="index">001/</p>
-            <DragAndDropContainer width="200px" height="200px" message="The picture was here" cursorRef={cursorRef}>
+            <DragAndDropContainer width="200px" height="200px" message="The picture was here" cursorRef={cursorRef} placeholderTooltip="Click to reset" targetTooltip="Drag me">
               <HoverEffect width="100%" height="100%" >
                 <img src={PROFILE_PICTURE} />
               </HoverEffect>
@@ -38,14 +39,9 @@ export function HomePageComponent({cursorRef}: PageProps) {
             <h2>UX/UI Designer and Developer based in Rennes</h2>
           </div>
           <Button cursorRef={cursorRef}>Next</Button>
-      </section>
-      <section className="home-work">
-          <div className="project-grid">
-            <div className="home-description">
-                <p className="index">002/</p>
-                <ProjectSelector label="Projects" active={true}/>
-                <ProjectSelector label="Lab" active={false}/>
-            </div>
+          <div className="scroll-invite">
+            <p>Scroll</p>
+            <div className="scoll-invite-line"/>
           </div>
       </section>
       <section/>

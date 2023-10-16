@@ -7,7 +7,8 @@ export const CLASSES = {
   ACTIVE_EFFECT: "active-effect",
   ACTIVE: "active",
   INDEX: "index",
-  BACKGROUND_SHAPE: "background-shape"
+  BACKGROUND_SHAPE: "background-shape",
+  ONE_LINE: "one-line"
 }
 
 export interface Position {
