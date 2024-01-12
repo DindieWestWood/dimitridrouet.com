@@ -1,54 +1,45 @@
-import { ReactNode, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import "./Button.scss";
 import { Power3, gsap } from "gsap";
-import { CLASSES as GENERAL_CLASSES, CursorTriggerProps, Position } from "../../assets/scripts/utils";
+import { CursorTriggerProps } from "../../assets/scripts/utils";
+import CursorService from "../../services/cursor.service";
 
 export interface ButtonProps extends CursorTriggerProps {
   handleClick?: () => void,
   children?: ReactNode,
 }
 
-const CLASSES = {
-  BACKGROUND: "button-background"
-}
-
-export default function Button ({handleClick, tooltip, cursorRef, children}: ButtonProps) {  
-  const hoverEffectRef = useRef<HTMLDivElement>(null);
-  const hoverTimelineRef = useRef<gsap.core.Timeline>(gsap.timeline());
+export default function Button ({handleClick, tooltip, children}: ButtonProps) {  
+  const buttonRef = useRef<HTMLButtonElement>(null);
   
-  const activeEffectRef = useRef<HTMLDivElement>(null);
-  const activeTimelineRef = useRef<gsap.core.Timeline>(gsap.timeline());
+  useEffect(() => {
+    document.addEventListener('pointermove', handlePointerMove);
+  }, []);
 
-  const handlePointerEnter = (event: React.PointerEvent<HTMLButtonElement>) => {
-    triggerEffect(event, hoverEffectRef, hoverTimelineRef, true);
-    cursorRef?.current?.open(tooltip);
+  const handlePointerMove = (event: PointerEvent) => {
+    const rect = buttonRef.current?.getBoundingClientRect();
+    if (rect) {
+      gsap.set(buttonRef.current, { '--x': `${event.clientX - rect.x}px`, '--y': `${event.clientY - rect.y}px` });
+    }
   }
 
-  const handlePointerLeave = (event: React.PointerEvent<HTMLButtonElement>) => {
-    triggerEffect(event, hoverEffectRef, hoverTimelineRef, false);
-    cursorRef?.current?.close();
-  };
-
-  const triggerEffect = (
-    event: React.PointerEvent<HTMLButtonElement>, 
-    elementRef: React.RefObject<HTMLDivElement>, 
-    timelineRef: React.MutableRefObject<gsap.core.Timeline>,
-    show: boolean) => {
-      const rect = (event.target as HTMLButtonElement).getBoundingClientRect();
-      const size = show ? getSize(rect) : 0;
-      const center = getCenter(rect, {x: event.clientX, y: event.clientY });
-      
-      timelineRef?.current
-        .set(elementRef?.current, { "--effect-position": `${center.x}% ${center.y}%` })
-        .to(elementRef?.current, { duration: .3, ease: Power3.easeInOut, "--effect-size": `${size}%` });
-  };
-
-  const getCenter = (rect: DOMRect, position: Position): Position => {
-    return {
-      x: ((position.x - rect.left) / rect.width) * 100,
-      y: ((position.y - rect.top) / rect.height) * 100
-    } as Position;
+  const handlePointerEnter = () => {
+    if (buttonRef && buttonRef.current) {
+      const size = getSize(buttonRef.current.getBoundingClientRect());
+      gsap.killTweensOf(buttonRef.current, "--size");
+      gsap.to(buttonRef.current, { duration: .2, ease: Power3.easeInOut, '--size': `${size}px` });
+    } 
   }
+
+  const handlePointerLeave = () => {
+    if (buttonRef && buttonRef.current) {
+      gsap.killTweensOf(buttonRef.current, "--size");
+      gsap.to(buttonRef.current, { duration: .2, ease: Power3.easeInOut, '--size': '10px' });
+    }
+  }
+
+  const handleMouseEnter = () => CursorService.instance.open(tooltip);
+  const handleMouseLeave = () => CursorService.instance.close();
 
   const getSize = (rect: DOMRect): number => {
     const { width: width, height: height } = rect;
@@ -57,14 +48,12 @@ export default function Button ({handleClick, tooltip, cursorRef, children}: But
   }
   
   return (
-    <button onClick={handleClick}
-      onPointerEnter={handlePointerEnter}
-      onPointerLeave={handlePointerLeave}
-      onPointerDown={($event) => triggerEffect($event, activeEffectRef, activeTimelineRef, true)}
-      onPointerUp={($event) => triggerEffect($event, activeEffectRef, activeTimelineRef, false)}>
-        <div className={CLASSES.BACKGROUND}/>
-        <div className={GENERAL_CLASSES.HOVER_EFFECT} ref={hoverEffectRef}/>
-        <div className={GENERAL_CLASSES.ACTIVE_EFFECT} ref={activeEffectRef}/>
+    <button ref={buttonRef} role="button" 
+            onClick={handleClick}
+            onPointerEnter={() => handlePointerEnter()}
+            onPointerLeave={() => handlePointerLeave()}
+            onMouseEnter={() => handleMouseEnter()}
+            onMouseLeave={() => handleMouseLeave()}>
         {children}
     </button>
   );

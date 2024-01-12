@@ -2,7 +2,7 @@ import { ReactNode, RefObject, useEffect, useRef, useState } from "react";
 import "./drag-and-drop-container.scss";
 import { Position } from "../../../assets/scripts/utils";
 import { Power3, gsap } from "gsap";
-import CursorTrigger, { CursorStyle } from "../../cursor-trigger/cursor-trigger";
+import CursorTrigger, { CursorStyle } from "../../cursor/cursor-trigger/cursor-trigger";
 import { CursorControl } from "../../cursor/Cursor";
 import { CLASSES as GENERAL_CLASSES } from "../../../assets/scripts/utils";
 

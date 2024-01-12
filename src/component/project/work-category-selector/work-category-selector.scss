@@ -1,13 +1,16 @@
 @import "../../../assets/stylesheets/colors.scss"; 
 
-.prj-sel-container {
+.work-category-selector {
   display: flex;
   gap: .5rem;
   align-items: baseline;
 
   cursor: pointer;
   opacity: .15;
+  
   transition: opacity 200ms ease-in-out;
+
+  h3 { transition: color 200ms ease-in-out; }
 
   &.active {
     opacity: 1;

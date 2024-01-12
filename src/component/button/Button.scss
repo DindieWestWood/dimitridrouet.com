@@ -1,58 +1,86 @@
 @import "../../assets/stylesheets/colors.scss";
 @import "../../assets/stylesheets/elevations.scss";
-@import "../../assets/stylesheets/radius.scss";
-@import "../../assets/stylesheets/spacing.scss";
 @import "../../assets/stylesheets/fonts.scss";
+@import "../../assets/stylesheets/radius.scss";
+@import "../../assets/stylesheets/shadows.scss";
+@import "../../assets/stylesheets/spacing.scss";
 
 button {
+  --x: 0;
+  --y: 0;
+  --size: 10px;
+
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  padding: $button-vertical-padding $button-horizontal-padding;
+  row-gap: .25rem;
+  padding: $common-medium-padding;
   overflow: hidden;
   z-index: $button-elevation;
 
   border: unset;
   border-radius: $button-radius;
-  background: unset;
-  color: $light-primary-text;
-  font-family: "Martian Mono";
-  font-size: .8rem;
-  font-weight: 400;
-  text-transform: uppercase;
+  background: $main-500;
+  color: $main-50;
+  cursor: pointer;
+  box-shadow: $shadow;
 
-  .button-background {
-    position: absolute;
-    inset: 0;
-    z-index: ($button-elevation - 4);
-    background-color: $main-500;
+  outline-offset: .125rem;
+  outline-width: .1875rem; 
+  outline-style: dashed;
+  outline-color: transparent;
+  
+  transition: box-shadow 300ms ease-in-out,
+             outline-color 100ms ease-in-out;
+
+  & > * {
+    z-index: 2;
   }
 
-  .hover-effect {
-    --effect-size: 0%;
-    --effect-position: 50% 50%;
+  &::after {
+    content: "";
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    inset: 0;
-    z-index: ($button-elevation - 3);
-    
-    background: $accent-500;
-    clip-path: circle(var(--effect-size) at var(--effect-position));
+    top: var(--y);
+    left: var(--x);
+    width: var(--size);
+    height: var(--size);
+    z-index: 1;
+
+    background-color: $hover-effect;
+    border-radius: 50%;
+
     pointer-events: none;
+
+    transform: translate3d(calc(var(--size) / -2), calc(var(--size) / -2), 0);
+    transition: background-color 200ms ease-in-out;
   }
 
-  .active-effect {
-    --effect-size: 0%;
-    --effect-position: 50% 50%;
-    position: absolute;
-    inset: 0;
-    z-index: ($button-elevation - 2);
-    
-    background: $active-effect;
-    clip-path: circle(var(--effect-size) at var(--effect-position));
-    pointer-events: none;
+  &:focus-visible {
+    outline-color: $main-950;
+  }
+
+  &:hover {
+    box-shadow: $shadow-xl;
+    outline-color: transparent;
+
+    &::after {
+      background-color: $hover-effect;
+    }
+  }
+
+  &:active {
+    box-shadow: $inset-shadow;
+    outline-color: transparent;
+
+    &::after {
+      background-color: $active-effect;
+    }
+  }
+
+  span {
+    padding-left: .25rem;
+    padding-right: .25rem;
   }
 }

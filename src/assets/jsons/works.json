@@ -1,0 +1,139 @@
+[
+  {
+    "id": "live-status", 
+    "categoryId": "projects", 
+    "title": "Live Status", 
+    "description": [ "Live Status is a meeting room reservation application. It is designed to be deployed on tablets placed outside the rooms." ],
+    "period": "2023",
+    "client": "Wijin",
+    "company": "Wijin",
+    "roles": [ "UX/UI Designer" ]
+  },
+  {
+    "id": "si-commande",
+    "categoryId": "projects",
+    "title": "SI Commande Legendre",
+    "description": [
+      "SI Commande is an application from the Legendre group, which allows site managers and foremen to create material orders.",
+      "The application also allows for the creation of reusable standard orders."
+    ],
+    "period": "2023",
+    "client": "Groupe Legendre",
+    "company": "Wijin",
+    "roles": [ "UX/UI Designer" ]
+  },
+  {
+    "id": "mayiko-shop",
+    "categoryId": "projects",
+    "title": "Mayiko's Online Shop",
+    "description": [
+      "Mayiko is an online shop specialized in interior decoration and African craftsmanship.",
+      "The site offers a product catalog, an history of past orders, a wishlist, and a search functionality."
+    ],
+    "period": "2023",
+    "client": "Mayiko",
+    "company": "Freelancing",
+    "roles": [ "UX/UI Designer" ]
+  },
+  {
+    "id": "dic-showcase-website",
+    "categoryId" : "projects",
+    "title": "D.I.C. showcase website",
+    "description": [
+      "To celebrate its 40th anniversary, the Civil Engineering design office DIC SA Ingénieurs has decided to get a new website.",
+      "We started with a modern & technological approach, respecting the values ​​of the company, namely: reliability, that stands the test of time and sobriety in production."
+    ],
+    "period": "2022",
+    "client": "D.I.C. Ingénieurs",
+    "company": "Freelancing",
+    "roles": [ "UX/UI Designer", "Developer" ]
+  },
+  {
+    "id": "sopra-steria-mgmt-software",
+    "categoryId": "projects",
+    "title": "DGA Management Software",
+    "description": [
+      "During my three years at Sopra Steria, I worked on numerous projects on behalf of the French Ministry of the Armed Forces.",
+      "Given the sensitivity of the content, I am not able to reveal images of my work."
+    ],
+    "period": "2019-2022",
+    "client": "DGA",
+    "company": "Sopra Steria",
+    "roles": [ "UX/UI Designer", "Developer" ]
+  },
+  {
+    "id": "tic-tac-tile",
+    "categoryId": "projects",
+    "title": "Tic Tac Tile",
+    "description": [
+      "Tic Tac Tile is an haptic component developed by Ruwido, a remote controls manufacturer.",
+      "It is a debossed tactile, broken down into several areas, designed for several purposes: TV, VR, automotive, smart houses."
+    ],
+    "period": "2017-2018",
+    "client": "Ruwido",
+    "company": "Ruwido",
+    "roles": [ "Interaction Designer", "Developer" ]
+  },
+  {
+    "id": "circle",
+    "categoryId": "projects",
+    "title": "Circle UI",
+    "description": [
+      "Circle is a television interface developed by Ruwido, a remote controls manufacturers.",
+      "It is a concept inspired by users and designed to address the problem of navigation history visualisation.",
+      "Navigation appends with a circular controller, and the history appears in the center of the screen in the form of layers."
+    ],
+    "period": "2016",
+    "client": "Ruwido",
+    "company": "Ruwido",
+    "roles": [ "UX/UI Designer" ]
+  },
+  {
+    "id": "circle-voice",
+    "categoryId": "projects",
+    "title": "Circle Voice",
+    "description": [
+      "Circle voice is a vocal assistant for television, developed by Ruwido, a remote controls manufacturer.",
+      "t is a conversational agent, allowing a fast search of content, with combinatorial filters."
+    ],
+    "period": "2016",
+    "client": "Ruwido",
+    "company": "Ruwido",
+    "roles": [ "UX/UI Designer" ]
+  },
+  {
+    "id": "rdma",
+    "categoryId": "lab",
+    "title": "Rossignol Brand Identity",
+    "description": [
+      "A brand identity for a second-hand shop named Rossignol de mes amours.",
+      "The logo's iconographic part features a nightingale stylized into a heart shape, with its head held high as if proud of its latest outfit.",
+      "The typographic aspect utilizes a font inspired by the 1970s, offering a vintage feel while retaining the playful nature of the previous logo."      
+    ],
+    "period": "2023",
+    "client": "Rossignol de mes amours",
+    "company": "Freelancing",
+    "roles": [ "Graphic Designer" ]
+  },
+  {
+    "id": "byblos",
+    "categoryId": "lab",
+    "title": "Byblos Game",
+    "description": [
+      "Byblos is a mobile game. The aim of the game is to place spheres with symbols on corresponding tiles.",
+      "Spheres move altogether sliding in four directions (up, down, left, right). As the player progresses, other elements add up."
+    ],
+    "period": "2018-2023",
+    "roles": [ "UX/UI Designer", "Developer" ]
+  },
+  {
+    "id": "phenomena",
+    "categoryId": "lab",
+    "title": "Phenomena Font",
+    "description": [
+      "Phenomena is an Art déco font, based on 20s, 30s advertisment."
+    ],
+    "period": "2018",
+    "roles": [ "Graphic Designer" ]
+  }
+]

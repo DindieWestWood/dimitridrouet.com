@@ -1,5 +1,6 @@
+import "./cursor-trigger.scss";
 import { ReactNode, RefObject } from "react";
-import { CursorControl } from "../cursor/Cursor";
+import { CursorControl } from "../Cursor";
 
 export enum CursorStyle {
   POINTER= "pointer",

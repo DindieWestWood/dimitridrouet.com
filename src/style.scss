@@ -11,9 +11,10 @@
 
 body {
   background-color: $background;
-  font-family: $martian-mono;
-  font-weight: 300;
+  font-family: $switzer;
+  font-weight: 400;
   overflow-x: hidden;
+  color: $dark-secondary-text;
 }
 
 #root {
@@ -30,15 +31,31 @@ section {
   align-items: start;
 }
 
+.display {
+  font-family: $thunder;
+  font-variation-settings: "CNTR" 0;
+  font-style: normal;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: $dark-primary-text;
+}
+
 h1 {
   font-size: min(max(8.3vw, 3rem), 11rem);
   font-weight: 500;
-  text-transform: uppercase;
+
+  &.display {
+    font-size: min(max(10vw, 3.5rem), 14rem);
+
+    .emoji {
+      font-size: min(max(8.3vw, 3rem), 11rem);
+    }
+  }
 }
 
 h2 {
   font-size: min(max(4vw, 1.4rem), 5.3rem);
-  font-weight: 300;
+  font-weight: 500;
 }
 
 h3 {
@@ -47,15 +64,15 @@ h3 {
   text-transform: uppercase;
 }
 
-p {
-  font-size: min(max(2vw, .8rem), 1rem);
-  font-weight: 300;
+p, button {
+  font-size: min(max(2vw, 1rem), 1.2rem);
+  font-weight: 400;
 }
 
 .index {
+  font-family: $martian-mono;
   font-size: .8rem;
   font-weight: 400;
-  color: $dark-secondary-text;
 }
 
 .background-shape {
@@ -64,8 +81,16 @@ p {
   height: 4rem;
   opacity: .3;
   filter: contrast(150%) brightness(150%);
-  background: linear-gradient(45deg, rgba(91,28,158,1), rgba(140,68,217,0)),
+  background: linear-gradient(45deg, $main-700, rgba(140,68,217,0)),
               url(assets/images/textures/noise.svg) repeat;
+}
+
+.waving-hand {
+  animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
+  animation-duration: 2.5s;        /* Change to speed up or slow down */
+  animation-iteration-count: infinite;  /* Never stop waving :) */
+  transform-origin: 70% 70%;       /* Pivot around the bottom-left palm */
+  display: inline-block;
 }
 
 .project-grid {
@@ -97,14 +122,13 @@ html.lenis {
   white-space: nowrap;
 }
 
-@media screen and (min-width: 800px) {
-  .project-grid {
-    grid-template-columns: repeat(2, 1fr); 
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .project-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }  
+@keyframes wave-animation {
+  0% { transform: rotate( 0.0deg) }
+ 10% { transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
+ 20% { transform: rotate(-8.0deg) }
+ 30% { transform: rotate(14.0deg) }
+ 40% { transform: rotate(-4.0deg) }
+ 50% { transform: rotate(10.0deg) }
+ 60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
+100% { transform: rotate( 0.0deg) }
 }

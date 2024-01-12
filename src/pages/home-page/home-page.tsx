@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import "./home-page.scss"
 
 import { CursorTriggerProps } from "../../assets/scripts/utils";
@@ -11,40 +10,57 @@ import DragAndDropContainer from "../../component/drag-and-drop/container/Drag-a
 import Button from "../../component/button/Button";
 import HoverEffect from "../../component/effects/hover-effect/hover-effect";
 import PROFILE_PICTURE from '../../assets/images/profile-picture.jpg';
-import ProjectSelector from "../../component/project/selector/project-selector";
-import CursorTrigger, { CursorStyle } from "../../component/cursor-trigger/cursor-trigger";
-export interface PageProps extends CursorTriggerProps {}
+import WorkGrid from "../../component/project/work-grid/work-grid";
+import { ArrowDownToDot } from "lucide-react";
+import ScrollService from "../../services/scroll.service";
 
-export function HomePageComponent({cursorRef}: PageProps) {
+// export interface PageProps extends CursorTriggerProps {
+//   scroll: Lenis;
+// }
+
+export function HomePageComponent({cursorRef}: CursorTriggerProps) {
   return (
     <>
-      <Background>
-        <ParallaxEffect>
-          <RotatorEffect>
-            <SelfRotatorEffect>
-              <BackgroundCircle />
-            </SelfRotatorEffect>
-          </RotatorEffect>
-        </ParallaxEffect>
-      </Background>
       <section className="home-cover">
-          <div className="home-cover-headlines">
+        <Background>
+          <ParallaxEffect>
+            <RotatorEffect>
+              <SelfRotatorEffect>
+                <BackgroundCircle />
+              </SelfRotatorEffect>
+            </RotatorEffect>
+          </ParallaxEffect>
+
+          <ParallaxEffect style={{position: "absolute", bottom: 0, right: 0}}>
+            <RotatorEffect>
+              <SelfRotatorEffect>
+                <BackgroundCircle />
+              </SelfRotatorEffect>
+            </RotatorEffect>
+          </ParallaxEffect>
+        </Background>
+          <div className="home-cover-headline-container">
             <p className="index">001/</p>
             <DragAndDropContainer width="200px" height="200px" message="The picture was here" cursorRef={cursorRef} placeholderTooltip="Click to reset" targetTooltip="Drag me">
               <HoverEffect width="100%" height="100%" >
                 <img src={PROFILE_PICTURE} />
               </HoverEffect>
             </DragAndDropContainer>
-            <h1>Dimitri Drouet</h1>
-            <h2>UX/UI Designer and Developer based in Rennes</h2>
+            <h1 className="display-heading">Hey! <span className="emoji waving-hand">👋</span> Nice to see you!</h1>
+            <p className="home-cover-headline">Welcome to my website! I'm Dimitri I'm a UI/UX Designer, Poladict, Podcasts Maker and Music Enthousiatic.</p>
           </div>
-          <Button cursorRef={cursorRef}>Next</Button>
+          <Button cursorRef={cursorRef} handleClick={() => ScrollService.instance.scrollTo('#work-grid')}>
+            <span>Next</span>
+            <ArrowDownToDot size={20} strokeWidth={2} />
+          </Button>
           <div className="scroll-invite">
             <p>Scroll</p>
             <div className="scoll-invite-line"/>
           </div>
       </section>
-      <section/>
+      <section id="work-grid">
+        <WorkGrid cursorRef={cursorRef}/>
+      </section>
     </>
   );
 }

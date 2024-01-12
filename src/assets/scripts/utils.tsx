@@ -25,12 +25,16 @@ export interface Translation {
 export interface CursorTriggerProps {
   cursorRef?: RefObject<CursorControl>;
   tooltip?: ReactNode;
-  icon?: string;
 }
 
 export interface BackgroundShapeProps {
-  width?: string,
-  height?: string
+  width?: string;
+  height?: string;
+}
+
+export interface EffectProps {
+  children?: ReactNode;
+  style?: React.CSSProperties;
 }
 
 export const DEFAULT_POSITION: Position = { x: 0, y: 0 }

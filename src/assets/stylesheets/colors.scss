@@ -1,11 +1,21 @@
 //general
 $background: #f8f7f6;
 $accent-500: #ef4d9b;
-$main-500: #8c44d9;
+
+//Main
+$main-50: #EDEFFF;
+$main-100: #DEE2FF;
+$main-300: #A0A5FF;
+$main-500: #6C5BF9;
+$main-700: #502FD3;
+$main-800: #4129AA;
+$main-950: #23184E;
+
+
 
 //effect
 $hover-effect: rgba(255, 255, 255, .25);
-$active-effect: rgba(0, 0, 0, .15);
+$active-effect: rgba(0, 0, 0, .1);
 
 //texts
 $light-primary-text: rgba(255, 255, 255, .81);

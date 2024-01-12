@@ -1,18 +1,18 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./parallax-effect.scss";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import { EffectProps } from "../../../assets/scripts/utils";
 
 const CLASSES = {
   PARALLAX_EFFECT: "parallax-effect"
 }
 
-export interface ParallaxEffectProps {
-  speed?: number; 
-  children?: ReactNode;
+export interface ParallaxEffectProps extends EffectProps {
+  speed?: number;
 }
 
-export default function ParallaxEffect({speed = .5, children}: ParallaxEffectProps) {
+export default function ParallaxEffect({speed = .5, children, style = {}}: ParallaxEffectProps) {
 
   const parallaxRef = useRef<HTMLDivElement>(null);
 
@@ -28,10 +28,10 @@ export default function ParallaxEffect({speed = .5, children}: ParallaxEffectPro
         scrub: 0
       }
     });
-  }, [])
+  }, []);
 
   return (
-    <div className={CLASSES.PARALLAX_EFFECT} ref={parallaxRef}>
+    <div className={CLASSES.PARALLAX_EFFECT} style={style} ref={parallaxRef}>
       {children}
     </div>
   );
