@@ -1,5 +1,5 @@
 import { ReactNode, RefObject } from "react";
-import { CursorControl } from "../../component/cursor/Cursor";
+import { CursorControl } from "../../components/cursor/Cursor";
 
 export const CLASSES = {
   BACKGROUND: "background",

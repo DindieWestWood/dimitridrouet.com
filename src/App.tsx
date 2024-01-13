@@ -1,15 +1,19 @@
 import "./App.scss";
 import { useEffect, useRef } from "react";
-import Cursor, { CursorControl } from "./component/cursor/Cursor";
+import Cursor, { CursorControl } from "./components/cursor/Cursor";
 import { ArrowDownToDot } from "lucide-react";
 import ScrollService from "./services/scroll.service";
-import Button from "./component/button/Button";
+import Button from "./components/button/Button";
+import ProjectService from "./services/project.service";
 
 function App(){
   const cursorRef = useRef<CursorControl>(null);
 
   useEffect(() => {
-    
+    ProjectService.instance.getProjects().subscribe({
+      next: projects => console.log(projects),
+      error: error => console.error(error)
+    });
   }, []);
 
   return (

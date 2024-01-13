@@ -1,16 +1,16 @@
 import "./home-page.scss"
 
 import { CursorTriggerProps } from "../../assets/scripts/utils";
-import BackgroundCircle from "../../component/background-shapes/background-circle/background-circle";
-import Background from "../../component/background/background";
-import ParallaxEffect from "../../component/effects/parallax-effect/parallax-effect";
-import RotatorEffect from "../../component/effects/rotator-effect/rotator-effect";
-import SelfRotatorEffect from "../../component/effects/self-rotator-effect/self-rotator-effect";
-import DragAndDropContainer from "../../component/drag-and-drop/container/Drag-and-drop-container";
-import Button from "../../component/button/Button";
-import HoverEffect from "../../component/effects/hover-effect/hover-effect";
+import BackgroundCircle from "../../components/background-shapes/background-circle/background-circle";
+import Background from "../../components/background/background";
+import ParallaxEffect from "../../components/effects/parallax-effect/parallax-effect";
+import RotatorEffect from "../../components/effects/rotator-effect/rotator-effect";
+import SelfRotatorEffect from "../../components/effects/self-rotator-effect/self-rotator-effect";
+import DragAndDropContainer from "../../components/drag-and-drop/container/Drag-and-drop-container";
+import Button from "../../components/button/Button";
+import HoverEffect from "../../components/effects/hover-effect/hover-effect";
 import PROFILE_PICTURE from '../../assets/images/profile-picture.jpg';
-import WorkGrid from "../../component/project/work-grid/work-grid";
+import WorkGrid from "../../components/project/work-grid/work-grid";
 import { ArrowDownToDot } from "lucide-react";
 import ScrollService from "../../services/scroll.service";
 
