@@ -8,6 +8,7 @@ import Button from "./components/button/Button";
 import ScrollService from "./services/scroll.service";
 import { ArrowDownToDot } from "lucide-react";
 import CoverSection from "./sections/cover/cover.section";
+import ProjectsSection from "./sections/projects/projects.section";
 
 function App(){
   //const cursorRef = useRef<CursorControl>(null);
@@ -67,10 +68,7 @@ function App(){
         { projects && projects.length > 0 ?
             <>
               <CoverSection />
-              <section id="projects-section">
-                <p className="index" aria-hidden="true">002/</p>
-                <h2 id="work-grid" className="display">Projects</h2>
-              </section>
+              <ProjectsSection />
             </> : ''}
 
         
