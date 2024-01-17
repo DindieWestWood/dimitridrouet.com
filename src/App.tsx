@@ -7,6 +7,7 @@ import FileService from "./services/file.service";
 import Button from "./components/button/Button";
 import ScrollService from "./services/scroll.service";
 import { ArrowDownToDot } from "lucide-react";
+import CoverSection from "./sections/cover/cover.section";
 
 function App(){
   //const cursorRef = useRef<CursorControl>(null);
@@ -65,22 +66,7 @@ function App(){
         <LoaderSection ref={loaderSectionRef} loadingPercentage={Math.floor(loadingProgress * 100)}/>
         { projects && projects.length > 0 ?
             <>
-              <section id="cover-section">
-                <div>
-                  <p className="index" aria-hidden="true">001/</p>
-                  <h1 className="display">Hey! <span className="emoji waving-hand" aria-hidden="true">👋</span> Nice to see you!</h1>
-                  <p id="headline-description">Welcome to my website! I'm Dimitri I'm a UI/UX Designer, Poladict, Podcasts Maker and Music Enthousiatic.</p>
-                </div>
-                
-                <Button handleClick={() => ScrollService.instance.scrollTo('#work-grid')}>
-                  <span>Next</span>
-                  <ArrowDownToDot size={20} strokeWidth={2} />
-                </Button>
-      
-                <div id="scroll-invite" aria-hidden="true">
-                  <p>Scroll</p>
-                </div>
-              </section>
+              <CoverSection />
               <section id="projects-section">
                 <p className="index" aria-hidden="true">002/</p>
                 <h2 id="work-grid" className="display">Projects</h2>
