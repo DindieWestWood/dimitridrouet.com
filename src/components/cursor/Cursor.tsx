@@ -1,13 +1,15 @@
-import { ReactNode, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { DEFAULT_POSITION, Position, Translation } from "../../assets/scripts/utils";
 import "./Cursor.scss";
-import { Power3, gsap } from "gsap";
-import CursorPointer, { open as openCursor, close as closeCursor } from "./cursor-pointer/cursor-pointer";
-import CursorTooltip from "./cursor-tooltip/cursor-tooltip";
+import { gsap, Power3, Back } from "gsap";
+import CursorTooltip, { CursorTooltipControl } from "./cursor-tooltip/cursor-tooltip";
 import { CLASSES as TOOLTIP_CLASSES } from "./cursor-tooltip/cursor-tooltip"; 
+import CursorService, { ICursorStateMachine } from "../../services/cursor.service";
+import CursorPointer, { CursorPointerControls } from "./cursor-pointer/cursor-pointer";
 
 const CLASSES = {
-  HOST: "cursor"
+  HOST: "cursor",
+  POINTER: "cursor-pointer"
 }
 
 const DEFAULT_TRANSLATION: Translation = {
@@ -16,25 +18,46 @@ const DEFAULT_TRANSLATION: Translation = {
   z: 0
 }
 
-export interface CursorProps { }
-export interface CursorControl { 
-  open: (tooltip?: ReactNode) => void,
-  close: () => void
-}
-
-export const Cursor = forwardRef<CursorControl, CursorProps>((props, ref) => {
+export default function Cursor () {
+  const [visible, setVisible] = useState<boolean>(false);
   const [targetPosition, setTargetPosition] = useState<Position>(DEFAULT_POSITION);
   const [renderedPosition, setRenderedPosition] = useState<Position>(DEFAULT_POSITION);
-  
-  const tooltipRef = useRef<CursorControl>(null);
+
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef<CursorPointerControls>(null);
+  const tooltipRef = useRef<CursorTooltipControl>(null);
   const positionRef = useRef<Position>(renderedPosition);
   const translationRef = useRef<Translation>(DEFAULT_TRANSLATION);
   const requestRef = useRef<number>();
+  
+  
   const speed = .1;
 
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+    const subscription = CursorService.instance.stateMachine$.subscribe(handleCursorStateChange);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+    };
+  }, [targetPosition, speed]);
 
   const handleMouseMove = (e: MouseEvent) => {
+    if (!visible) setVisible(true);
     setTargetPosition({ x: e.clientX, y: e.clientY });
+  }
+
+  const handleCursorStateChange = (state: ICursorStateMachine) => {
+    if (state.open) open(state.tooltip);
+    else close();
   }
 
   const animateCursor = () => {
@@ -76,7 +99,7 @@ export const Cursor = forwardRef<CursorControl, CursorProps>((props, ref) => {
 
     const newTranslation = { x: cTx + dTx, y: cTy + dTy, z: 0 }
     translationRef.current = newTranslation;
-    if (tooltipRef) gsap.set(`.${TOOLTIP_CLASSES.HOST}`, { x: ` ${newTranslation.x}%`, y: `${newTranslation.y}%`, transformOrigin: origin });
+    if (tooltipRef.current) gsap.set(`.${TOOLTIP_CLASSES.HOST}`, { x: ` ${newTranslation.x}%`, y: `${newTranslation.y}%`, transformOrigin: origin });
   }
 
   const animate = () => {
@@ -86,46 +109,31 @@ export const Cursor = forwardRef<CursorControl, CursorProps>((props, ref) => {
     requestRef.current = requestAnimationFrame(animate);
   }
 
-  const open = (tt?: ReactNode) => {
-    gsap.killTweensOf(`.${CLASSES.HOST}`, "opacity");
-    gsap.to(`.${CLASSES.HOST}`, { duration: .3, ease: Power3.easeInOut, opacity: .8 });
-    openCursor();
-    if (tt) tooltipRef?.current?.open(tt);
+  const open = (tooltip: ReactNode) => {
+    gsap.killTweensOf(cursorRef.current, "opacity");
+    gsap.to(cursorRef.current, { duration: .3, ease: Power3.easeOut, opacity: .8 });
+    
+    pointerRef.current?.open();
+    if (tooltip) tooltipRef.current?.open(tooltip);
   }
 
   const close = () => {
-    gsap.killTweensOf(`.${CLASSES.HOST}`, "opacity");
-    gsap.to(`.${CLASSES.HOST}`, { duration: .3, ease: Power3.easeInOut, opacity: .2 });
-    closeCursor();
-    tooltipRef?.current?.close();
+    gsap.killTweensOf(cursorRef.current, "opacity");
+    gsap.to(cursorRef.current, { duration: .3, ease: Power3.easeOut, opacity: .2  });
+
+    pointerRef.current?.close();
+    tooltipRef.current?.close();
   }
 
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
-    };
-  }, [targetPosition, speed]);
-
-  useImperativeHandle(ref, () => ({
-    open: open,
-    close: close
-  }));
-
   return (
-    <div className={CLASSES.HOST} style={{ left: `${renderedPosition.x}px`, top: `${renderedPosition.y}px` }}>
-      <CursorPointer/>
-      <CursorTooltip ref={tooltipRef}/>
-    </div>
-  )
-});
-
-export default Cursor;
+    <>
+      {
+        visible ?
+          <div ref={cursorRef} className={CLASSES.HOST} style={{ left: `${renderedPosition.x}px`, top: `${renderedPosition.y}px` }}>
+            <CursorPointer ref={pointerRef}/>
+            <CursorTooltip ref={tooltipRef}/>
+          </div> : ''
+      }
+    </>
+  );
+}

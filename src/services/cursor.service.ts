@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Observable, Subject } from "rxjs";
 
-export interface ICursorState {
+export interface ICursorStateMachine {
   open: boolean;
   tooltip: ReactNode;
 }
@@ -13,48 +13,41 @@ export default class CursorService {
     return this._instance; 
   }
 
-  private _state: ICursorState;
-  public get state() {
-    return this._state;
+  private _stateMachine: ICursorStateMachine;
+  public get stateMachine() {
+    return this._stateMachine;
   }
 
-  private _stateSubject: Subject<ICursorState>;
-  public get state$(): Observable<ICursorState> {
-    return this._stateSubject.asObservable();
+  private _stateMachineSubject: Subject<ICursorStateMachine>;
+  public get stateMachine$(): Observable<ICursorStateMachine> {
+    return this._stateMachineSubject.asObservable();
   }
 
   private constructor() {
-    this._state = {
+    this._stateMachine = {
       open: false,
       tooltip: null
     }
 
-    this._stateSubject = new Subject<ICursorState>();
+    this._stateMachineSubject = new Subject<ICursorStateMachine>();
   }
 
-  open(tooltip?: ReactNode) {
-    this._state = {
-      open: true,
-      tooltip: tooltip ?? null
+  enter(tooltip?: ReactNode) {
+    if (this._stateMachine.open && tooltip != this._stateMachine.tooltip) {
+      this._stateMachine.tooltip = tooltip;
+      this._stateMachineSubject.next(this._stateMachine);
+    } else if (!this._stateMachine.open) {
+      this._stateMachine.open = true;
+      this._stateMachine.tooltip = tooltip;
+      this._stateMachineSubject.next(this._stateMachine);
     }
-    this._stateSubject.next(this._state);
   }
 
-  close() {
-    this._state = {
-      open: false,
-      tooltip: null
+  leave() {
+    if (this._stateMachine.open) {
+      this._stateMachine.open = false;
+      this._stateMachine.tooltip = null;
+      this._stateMachineSubject.next(this._stateMachine);
     }
-
-    this._stateSubject.next(this._state);
-  }
-
-  setToolTip(tooltip: ReactNode) {
-    this._state = {
-      open: this._state.open,
-      tooltip: tooltip ?? null
-    }
-
-    this._stateSubject.next(this._state);
   }
 }

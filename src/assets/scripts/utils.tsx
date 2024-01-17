@@ -1,5 +1,4 @@
 import { ReactNode, RefObject } from "react";
-import { CursorControl } from "../../components/cursor/Cursor";
 
 export const CLASSES = {
   BACKGROUND: "background",
@@ -24,7 +23,6 @@ export interface Translation {
 }
 
 export interface CursorTriggerProps {
-  cursorRef?: RefObject<CursorControl>;
   tooltip?: ReactNode;
 }
 

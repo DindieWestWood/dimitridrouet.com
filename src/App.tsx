@@ -4,11 +4,9 @@ import ProjectService from "./services/project.service";
 import LoaderSection, { LoaderSectionControl } from "./sections/loader/loader.section";
 import IProject from "./interfaces/project.interface";
 import FileService from "./services/file.service";
-import Button from "./components/button/Button";
-import ScrollService from "./services/scroll.service";
-import { ArrowDownToDot } from "lucide-react";
 import CoverSection from "./sections/cover/cover.section";
 import ProjectsSection from "./sections/projects/projects.section";
+import Cursor from "./components/cursor/Cursor";
 
 function App(){
   //const cursorRef = useRef<CursorControl>(null);
@@ -69,11 +67,11 @@ function App(){
             <>
               <CoverSection />
               <ProjectsSection />
+              <Cursor />
             </> : ''}
 
         
       </main>
-      {/* <Cursor ref={cursorRef}/> */}
     </>
   )
 }

@@ -1,5 +1,5 @@
 import "./cursor-tooltip.scss"
-import { ReactNode, forwardRef, useRef, useImperativeHandle, useState } from "react";
+import { ReactNode, forwardRef, useImperativeHandle, useState } from "react";
 import { gsap, Back } from "gsap";
 
 export interface CursorTooltipProps {}

@@ -28,18 +28,17 @@ export default function Button ({handleClick, tooltip, children}: ButtonProps) {
       const size = getSize(buttonRef.current.getBoundingClientRect());
       gsap.killTweensOf(buttonRef.current, "--size");
       gsap.to(buttonRef.current, { duration: .2, ease: Power3.easeInOut, '--size': `${size}px` });
-    } 
+      CursorService.instance.enter(tooltip)
+    }
   }
 
   const handlePointerLeave = () => {
     if (buttonRef && buttonRef.current) {
       gsap.killTweensOf(buttonRef.current, "--size");
       gsap.to(buttonRef.current, { duration: .2, ease: Power3.easeInOut, '--size': '10px' });
+      CursorService.instance.leave()
     }
   }
-
-  const handleMouseEnter = () => CursorService.instance.open(tooltip);
-  const handleMouseLeave = () => CursorService.instance.close();
 
   const getSize = (rect: DOMRect): number => {
     const { width: width, height: height } = rect;
@@ -51,9 +50,7 @@ export default function Button ({handleClick, tooltip, children}: ButtonProps) {
     <button ref={buttonRef} role="button" 
             onClick={handleClick}
             onPointerEnter={() => handlePointerEnter()}
-            onPointerLeave={() => handlePointerLeave()}
-            onMouseEnter={() => handleMouseEnter()}
-            onMouseLeave={() => handleMouseLeave()}>
+            onPointerLeave={() => handlePointerLeave()}>
         {children}
     </button>
   );
