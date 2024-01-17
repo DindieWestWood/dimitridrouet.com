@@ -19,7 +19,7 @@ export default class ProjectService {
       const projectCollectionRef = collection(db, PROJECT_COLLECTION_NAME);
 
       getDocs(projectCollectionRef)
-        .then(querySnapshot => {
+        .then((querySnapshot) => {
           const projects = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as IProject));
           subcriber.next(projects);
           subcriber.complete();
@@ -27,5 +27,4 @@ export default class ProjectService {
         .catch((error) => subcriber.error(error));
     });
   }
-
 }

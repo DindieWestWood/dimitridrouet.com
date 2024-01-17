@@ -98,6 +98,11 @@ p, button {
   gap: 1rem;
 }
 
+.showable-text {
+  opacity: 0;
+  transform: translateY(50%);
+}
+
 html.lenis {
   height: auto;
 }
@@ -120,6 +125,12 @@ html.lenis {
 
 .one-line {
   white-space: nowrap;
+}
+
+.accessibility-text {
+  position: fixed;
+  top: -110%;
+  left: -110%;
 }
 
 @keyframes wave-animation {

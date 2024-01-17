@@ -1,0 +1,11 @@
+
+
+.loadbar {
+  width: fit-content;
+  height: fit-content;
+
+  p {
+    font-size: min(max(8.3vw, 3rem), 11rem);
+  }
+}
+
