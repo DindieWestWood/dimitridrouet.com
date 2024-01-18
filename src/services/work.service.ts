@@ -1,27 +1,27 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../assets/scripts/firebase.ts";
-import IProject from "../interfaces/project.interface.ts";
 import { Observable } from "rxjs";
+import IWork from "../interfaces/work.interface.ts";
 
 const PROJECT_COLLECTION_NAME = 'projects';
 
-export default class ProjectService {
-  private static _instance: ProjectService;
+export default class WorkService {
+  private static _instance: WorkService;
   public static get instance() {
-    if (!this._instance) this._instance = new ProjectService();
+    if (!this._instance) this._instance = new WorkService();
     return this._instance; 
   }
 
   private constructor() {}
   
-  public getProjects(): Observable<IProject[]> {
+  public getAllWork(): Observable<IWork[]> {
     return new Observable(subcriber => {
       const projectCollectionRef = collection(db, PROJECT_COLLECTION_NAME);
 
       getDocs(projectCollectionRef)
         .then((querySnapshot) => {
-          const projects = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as IProject));
-          subcriber.next(projects);
+          const workList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as IWork));
+          subcriber.next(workList);
           subcriber.complete();
         })
         .catch((error) => subcriber.error(error));

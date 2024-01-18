@@ -1,9 +1,9 @@
-import { ProjectTypeEnum } from "../enums/project-type.enum";
+import { WorkTypeEnum } from "../enums/work-type.enum";
 
-export default interface IProject {
+export default interface IWork {
   id: string;
   active: boolean;
-  type: ProjectTypeEnum;
+  type: WorkTypeEnum;
   name: string;
   description: string;
   company?: string;

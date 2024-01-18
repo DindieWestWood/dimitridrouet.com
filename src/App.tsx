@@ -1,26 +1,26 @@
 import "./App.scss";
 import { useEffect, useRef, useState } from "react";
-import ProjectService from "./services/project.service";
 import LoaderSection, { LoaderSectionControl } from "./sections/loader/loader.section";
-import IProject from "./interfaces/project.interface";
+import IWork from "./interfaces/work.interface";
 import FileService from "./services/file.service";
 import CoverSection from "./sections/cover/cover.section";
-import ProjectsSection from "./sections/projects/projects.section";
+import WorkSection from "./sections/work/work.section";
 import Cursor from "./components/cursor/Cursor";
+import WorkService from "./services/work.service";
 
 function App(){
   //const cursorRef = useRef<CursorControl>(null);
   const loaderSectionRef = useRef<LoaderSectionControl>(null);
   const loadingProgressCounterRef = useRef<number>(0);
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
-  const projectsRef = useRef<IProject[]>([]);
-  const [projects, setProjects] = useState<IProject[]>([]);
+  const workListRef = useRef<IWork[]>([]);
+  const [workList, setWorkList] = useState<IWork[]>([]);
 
   useEffect(() => {
     loadingProgressCounterRef.current = 0;
-    ProjectService.instance.getProjects().subscribe({
+    WorkService.instance.getAllWork().subscribe({
       next: res => {
-        projectsRef.current = res;
+        workListRef.current = res;
         loadImages();
       },    
       error: error => console.error(error)
@@ -28,9 +28,9 @@ function App(){
   }, []);
 
   const loadImages = () => {
-    projectsRef.current.forEach((project) => {
-      if (project.imagesRefs && project.imagesRefs.length > 0) {
-        FileService.instance.getImage(`projects/${project.id}/${project.imagesRefs[0]}`).subscribe({
+    workListRef.current.forEach((work) => {
+      if (work.imagesRefs && work.imagesRefs.length > 0) {
+        FileService.instance.getImage(`projects/${work.id}/${work.imagesRefs[0]}`).subscribe({
           next: img => {
             console.log(img)
             handleImagePreloaded(); 
@@ -46,10 +46,10 @@ function App(){
 
   const handleImagePreloaded = () => {
     loadingProgressCounterRef.current ++;
-    setLoadingProgress(loadingProgressCounterRef.current/projectsRef.current.length);
+    setLoadingProgress(loadingProgressCounterRef.current/workListRef.current.length);
 
-    if (loadingProgressCounterRef.current === projectsRef.current.length && loaderSectionRef?.current) {
-      setProjects(projectsRef.current);
+    if (loadingProgressCounterRef.current === workListRef.current.length && loaderSectionRef?.current) {
+      setWorkList(workListRef.current);
       loaderSectionRef?.current.close(handleLoaderSectionClosed);
     }
   }
@@ -63,10 +63,10 @@ function App(){
     <>
       <main role="main">
         <LoaderSection ref={loaderSectionRef} loadingPercentage={Math.floor(loadingProgress * 100)}/>
-        { projects && projects.length > 0 ?
+        { workList && workList.length > 0 ?
             <>
               <CoverSection nextSelector={'#work-grid'} />
-              <ProjectsSection />
+              <WorkSection />
               <Cursor />
             </> : ''}
 
