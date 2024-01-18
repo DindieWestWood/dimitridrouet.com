@@ -65,7 +65,7 @@ function App(){
         <LoaderSection ref={loaderSectionRef} loadingPercentage={Math.floor(loadingProgress * 100)}/>
         { projects && projects.length > 0 ?
             <>
-              <CoverSection />
+              <CoverSection nextSelector={'#work-grid'} />
               <ProjectsSection />
               <Cursor />
             </> : ''}

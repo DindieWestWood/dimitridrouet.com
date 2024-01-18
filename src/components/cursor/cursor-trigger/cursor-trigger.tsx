@@ -1,6 +1,6 @@
+import CursorService from "../../../services/cursor.service";
 import "./cursor-trigger.scss";
 import { ReactNode, RefObject } from "react";
-import { CursorControl } from "../Cursor";
 
 export enum CursorStyle {
   POINTER= "pointer",
@@ -11,7 +11,6 @@ export enum CursorStyle {
 export interface CursorTriggerProps {
   style?: CursorStyle;
   children?: ReactNode;
-  cursorRef?: RefObject<CursorControl>;
   toolip?: ReactNode;
 }
 
@@ -19,10 +18,9 @@ const CLASSES = {
   HOST: "cursor-trigger"
 } 
 
-export default function CursorTrigger({style = CursorStyle.POINTER, cursorRef, children, toolip}: CursorTriggerProps) {
-
-  const handleEnter = () => cursorRef?.current?.open(toolip);
-  const handleLeave = () => cursorRef?.current?.close();
+export default function CursorTrigger({style = CursorStyle.POINTER, children, toolip}: CursorTriggerProps) {
+  const handleEnter = () => CursorService.instance.enter(toolip);
+  const handleLeave = () => CursorService.instance.leave();
 
   return (
     <div className={CLASSES.HOST} onMouseEnter={handleEnter} onMouseLeave={handleLeave} style={{cursor: style}}>

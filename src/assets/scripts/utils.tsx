@@ -1,14 +1,15 @@
 import { ReactNode, RefObject } from "react";
 
 export const CLASSES = {
-  BACKGROUND: "background",
-  DISPLAY: "display",
-  ACTIVE: "active",
-  INDEX: "index",
-  BACKGROUND_SHAPE: "background-shape",
-  ONE_LINE: "one-line",
-  SHOWABLE_TEXT: "showable-text",
-  ACCESSIBILITY_TEXT: "accessibility-text"
+  ACCESSIBILITY_TEXT: 'accessibility-text',
+  ACTIVE: 'active',
+  BACKGROUND: 'background',
+  BACKGROUND_SHAPE: 'background-shape',
+  DISPLAY: 'display',
+  EMOJI: 'emoji',
+  HEADLINE_DESCRIPTION: 'headline-description',
+  INDEX: 'index',
+  ONE_LINE: 'one-line'
 }
 
 export interface Position {

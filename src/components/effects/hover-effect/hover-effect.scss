@@ -1,3 +1,5 @@
+@import "../../../assets/stylesheets/radius.scss";
+
 .hover-effect-container {
   position: relative;
   display: flex;
@@ -17,7 +19,7 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   background-color: lightgray;
-  border-radius: .5rem;
+  border-radius: $hover-effect-radius;
   overflow: hidden;
   transform: rotateX(calc(var(--rotateX) * var(--smoothRatio)))
              rotateY(calc(var(--rotateY) * var(--smoothRatio)));

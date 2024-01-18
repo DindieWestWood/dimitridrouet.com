@@ -38,11 +38,7 @@ const LoaderSection = forwardRef<LoaderSectionControl, LoaderSectionProps>(({loa
   }, [loadingPercentage]);
 
   const hideAnimation = (callback?: () => void) => {
-    const showableTexts = sectionRef.current?.querySelectorAll(`.${GENERAL_CLASSES.SHOWABLE_TEXT}`);
     const timeline = gsap.timeline();
-    if (showableTexts) {
-      gsap.killTweensOf(showableTexts, "opacity, y");
-    }
 
     timeline.to(sectionRef.current, { delay: .2, duration: .8, opacity: 0 });
     timeline.call(() => {
@@ -58,8 +54,7 @@ const LoaderSection = forwardRef<LoaderSectionControl, LoaderSectionProps>(({loa
           <div className={CLASSES.LOADER_INFO_CONTAINER}>
             <p className={GENERAL_CLASSES.INDEX}>dimitridrouet.com</p>
             <h1 className={GENERAL_CLASSES.DISPLAY}>Welcome</h1>
-            <p>Gathering the finest details of my portfolio.</p>
-            <p>Hold tight, it's worth the wait!</p>
+            <p className={GENERAL_CLASSES.HEADLINE_DESCRIPTION}>Gathering the finest details of my portfolio. Hold tight, it's worth the wait!</p>
           </div>
           <div className={CLASSES.LOADBAR_CONTAINER}>
             <Loadbar value={loadingPercentage}/>

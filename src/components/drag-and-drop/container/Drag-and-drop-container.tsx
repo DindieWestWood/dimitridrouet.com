@@ -3,7 +3,6 @@ import "./drag-and-drop-container.scss";
 import { Position } from "../../../assets/scripts/utils";
 import { Power3, gsap } from "gsap";
 import CursorTrigger, { CursorStyle } from "../../cursor/cursor-trigger/cursor-trigger";
-import { CursorControl } from "../../cursor/Cursor";
 import { CLASSES as GENERAL_CLASSES } from "../../../assets/scripts/utils";
 
 export interface DragAndDropContainerProps {
@@ -11,7 +10,6 @@ export interface DragAndDropContainerProps {
   height: string,
   children?: ReactNode,
   message?: string,
-  cursorRef?: RefObject<CursorControl>;
   placeholderTooltip?: string;
   targetTooltip?: string;
 }
@@ -23,7 +21,7 @@ export const CLASSES = {
   IS_DRAGGING: "is-dragging"
 }
 
-export default function DragAndDropContainer({width, height, message, children, cursorRef, placeholderTooltip, targetTooltip}: DragAndDropContainerProps) {
+export default function DragAndDropContainer({width, height, message, children, placeholderTooltip, targetTooltip}: DragAndDropContainerProps) {
   const placeholderRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -123,13 +121,13 @@ export default function DragAndDropContainer({width, height, message, children, 
   }
 
   return (
-    <div className={CLASSES.HOST} style={{width: width, height: height}}>
-      <CursorTrigger cursorRef={cursorRef} style={CursorStyle.POINTER} toolip={<p className={GENERAL_CLASSES.ONE_LINE}>{placeholderTooltip}</p>}>
+    <div className={CLASSES.HOST} style={{width: width, height: height}} aria-hidden="true">
+      <CursorTrigger style={CursorStyle.POINTER} toolip={<p className={GENERAL_CLASSES.ONE_LINE}>{placeholderTooltip}</p>}>
         <div className={CLASSES.PLACEHOLDER} ref={placeholderRef}>
             {message}
         </div>
       </CursorTrigger>
-      <CursorTrigger cursorRef={cursorRef} style={dragging ? CursorStyle.GRABBING : CursorStyle.GRAB} toolip={<p className={GENERAL_CLASSES.ONE_LINE}>{targetTooltip}</p>}>
+      <CursorTrigger style={dragging ? CursorStyle.GRABBING : CursorStyle.GRAB} toolip={<p className={GENERAL_CLASSES.ONE_LINE}>{targetTooltip}</p>}>
         <div className={CLASSES.TARGET} ref={targetRef}>
           {children}
         </div>
