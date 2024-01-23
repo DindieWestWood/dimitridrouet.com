@@ -9,7 +9,8 @@ export const CLASSES = {
   EMOJI: 'emoji',
   HEADLINE_DESCRIPTION: 'headline-description',
   INDEX: 'index',
-  ONE_LINE: 'one-line'
+  ONE_LINE: 'one-line',
+  HIDDEN: 'hidden'
 }
 
 export interface Position {

@@ -66,7 +66,7 @@ function App(){
         { workList && workList.length > 0 ?
             <>
               <CoverSection nextSelector={'#work-grid'} />
-              <WorkSection />
+              <WorkSection workList={workList}/>
               <Cursor />
             </> : ''}
 

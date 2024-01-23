@@ -54,8 +54,12 @@ h1 {
 }
 
 h2 {
-  font-size: min(max(4vw, 1.4rem), 5.3rem);
+  font-size: min(max(7.1vw, 1.78rem), 9.4rem);
   font-weight: 500;
+
+  &.display {
+    font-size: min(max(8.6vw, 3rem), 12rem);
+  }
 }
 
 h3 {
