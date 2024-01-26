@@ -45,10 +45,10 @@ h1 {
   font-weight: 500;
 
   &.display {
-    font-size: min(max(10vw, 3.5rem), 14rem);
+    font-size: max(12vw, 5.4rem);//min(max(10vw, 3.5rem), 14rem);
 
     .emoji {
-      font-size: min(max(8.3vw, 3rem), 11rem);
+      font-size: max(9vw, 4.05rem);//min(max(8.3vw, 3rem), 11rem);
     }
   }
 }
@@ -71,6 +71,23 @@ h3 {
 p, button {
   font-size: min(max(2vw, 1rem), 1.2rem);
   font-weight: 400;
+}
+
+button {
+  position: relative;
+  
+  outline-offset: .125rem;
+  outline: .1875rem solid transparent;
+
+  border: unset;
+  background: unset;
+  cursor: pointer;
+
+  transition: outline-color 200ms ease-out;
+
+  &:focus-visible {
+    outline-color: $main-950;
+  }
 }
 
 .index {

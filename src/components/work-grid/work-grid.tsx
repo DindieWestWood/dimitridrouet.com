@@ -5,10 +5,12 @@ import { WorkTypeEnum, workTypeToDescription } from '../../enums/work-type.enum'
 import { KeyboardEvent, ReactNode, useRef, useState } from 'react';
 import CursorService from '../../services/cursor.service';
 import gsap, { Power3 } from 'gsap';
+import WorkThumbnail from '../work-thumbnail/work-tumbnail';
 
 export const CLASSES = {
   GRID: 'work-grid',
   INNER_GRID: 'work-inner-grid',
+  INNER_GRID_EMPTY_SPACE: 'work-inner-grid-empty-space',
   HEADER: 'work-grid-header',
   CATEGORY_SELECTORS: 'work-category-selectors',
   CATEGORY_SELECTOR: 'work-category-selector',
@@ -24,6 +26,7 @@ export default function WorkGrid({id, workList}: WorkGridProps) {
   const [selectedType, setSelectedType] = useState<WorkTypeEnum>(WorkTypeEnum.PROJECT);
   const [description, setDescription] = useState<string>(workTypeToDescription(WorkTypeEnum.PROJECT));
   const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const isShiftKeyDownRef = useRef<boolean>(false); 
 
   const getWorkCount = (type: WorkTypeEnum) => {
     return workList.reduce((count, current) => 
@@ -58,6 +61,7 @@ export default function WorkGrid({id, workList}: WorkGridProps) {
 
       categoryTabPannels.push(
         <div key={`${id}-${value}-pannel`} id={`${id}-${value}-pannel`} className={classes.join(' ')} role="tabpanel" aria-hidden={hidden}>
+          <div className={CLASSES.INNER_GRID_EMPTY_SPACE}/>
           {getWorkList(value)}
         </div>
       );
@@ -69,7 +73,7 @@ export default function WorkGrid({id, workList}: WorkGridProps) {
   const getWorkList = (type: WorkTypeEnum) => {
     return workList.filter((work) => work.type === type)
             .sort((w1, w2) => w2.index - w1.index)
-            .map((work) => <p key={work.id}>{work.name}</p>);
+            .map((work) => <WorkThumbnail key={work.id} work={work}/>);
   }
 
   const handleCategorySelectorChange = (type: WorkTypeEnum, focusWithin: boolean = false) => {
@@ -89,30 +93,32 @@ export default function WorkGrid({id, workList}: WorkGridProps) {
     CursorService.instance.leave();
   }
 
-  const handleTablistKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown = (event: KeyboardEvent) => {
     console.log(event.key);
     switch(event.key) {
       case "ArrowRight": handleArrowLeftKeyDown(); break;
       case "ArrowLeft": handleArrowRightKeyDown(); break;
       case "Home": handleHomeKeyDown(); break;
       case "End": handleEndKeyDown(); break;
-    }
-  }
-
-  const handleGridKeyDown = (event: KeyboardEvent) => {
-    console.log(event.key);
-    switch (event.key) {
-      case "Tab": handleTabKeyDown(); break;
+      case "Tab": handleTabKeyDown(event); break;
       case "Shift": handleShiftKeyDown(); break;
     }
   }
 
-  const handleTabKeyDown = () => {
-    console.log("TAB KEY DOWN");
+  const handleTabKeyDown = (event: KeyboardEvent) => {
+    event.preventDefault;
+    event.stopPropagation();
+    console.log("TAB");
+    if (isShiftKeyDownRef.current) {
+      
+    } else {
+    
+    }
   }
 
   const handleShiftKeyDown = () => {
-    console.log("SHIFT KEY DOWN");
+    console.log("SHIFT");
+    isShiftKeyDownRef.current = !isShiftKeyDownRef.current;
   }
 
   const handleArrowLeftKeyDown = () => {
@@ -176,9 +182,9 @@ export default function WorkGrid({id, workList}: WorkGridProps) {
   }
 
   return (
-    <div id={id} className={CLASSES.GRID} onKeyDown={handleGridKeyDown}>
+    <div id={id} className={CLASSES.GRID}>
       <div className={CLASSES.HEADER}>
-        <div className={CLASSES.CATEGORY_SELECTORS} role="tablist" aria-labelledby={`${id}-label`} onKeyDown={handleTablistKeyDown}>
+        <div className={CLASSES.CATEGORY_SELECTORS} role="tablist" aria-labelledby={`${id}-label`} onKeyDown={handleKeyDown}>
           { getCategorySelectors() }
         </div>
         <p ref={descriptionRef}>{description}</p>

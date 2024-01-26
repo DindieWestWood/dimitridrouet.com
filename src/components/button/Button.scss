@@ -5,12 +5,11 @@
 @import "../../assets/stylesheets/shadows.scss";
 @import "../../assets/stylesheets/spacing.scss";
 
-button {
+.button {
   --x: 0;
   --y: 0;
   --size: 10px;
 
-  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -20,20 +19,12 @@ button {
   overflow: hidden;
   z-index: $button-elevation;
 
-  border: unset;
   border-radius: $button-radius;
-  background: $main-500;
+  background-color: $main-500;
   color: $main-50;
-  cursor: pointer;
   box-shadow: $shadow;
 
-  outline-offset: .125rem;
-  outline-width: .1875rem; 
-  outline-style: solid;
-  outline-color: transparent;
-  
-  transition: box-shadow 300ms ease-in-out,
-             outline-color 100ms ease-in-out;
+  transition: box-shadow 300ms ease-in-out;
 
   & > * {
     z-index: 2;
@@ -57,24 +48,14 @@ button {
     transition: background-color 200ms ease-in-out;
   }
 
-  &:focus-visible {
-    outline-color: $main-950;
-  }
-
   &:hover {
     box-shadow: $shadow-xl;
-
-    &::after {
-      background-color: $hover-effect;
-    }
+    &::after { background-color: $hover-effect; }
   }
 
   &:active {
     box-shadow: $inset-shadow;
-
-    &::after {
-      background-color: $active-effect;
-    }
+    &::after { background-color: $active-effect; }
   }
 
   span {

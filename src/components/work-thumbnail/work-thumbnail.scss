@@ -1,0 +1,42 @@
+@import "../../assets/stylesheets/radius.scss";     
+
+.work-thumbnail {
+  aspect-ratio: 4 / 3;
+  border-radius: $hover-effect-radius;
+
+  &:focus-visible {
+    .work-within-description {
+      opacity: 1;
+    }
+  }
+}
+
+.work-thumbnail-tooltip-info {
+  display: flex;
+  gap: .5rem;
+  
+  p {
+    font-weight: 400; 
+    white-space: nowrap;
+  }
+}
+
+.work-within-description {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  color: white;
+  gap: .25rem;
+  padding: 1rem 1rem 1rem 1rem;
+
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(74,79,80,0) 100%);
+  text-align: left;
+
+  opacity: 0;
+
+  transition: opacity 200ms ease-out;
+}

@@ -4,17 +4,26 @@ import { Power3, gsap } from "gsap";
 import { CursorTriggerProps } from "../../assets/scripts/utils";
 import CursorService from "../../services/cursor.service";
 
+export const CLASSES = {
+  HOST: "button"
+}
+
 export interface ButtonProps extends CursorTriggerProps {
-  handleClick?: () => void,
+  onClick?: () => void,
   children?: ReactNode,
 }
 
-export default function Button ({handleClick, tooltip, children}: ButtonProps) {  
+export default function Button ({onClick, tooltip, children}: ButtonProps) {  
   const buttonRef = useRef<HTMLButtonElement>(null);
   
   useEffect(() => {
     document.addEventListener('pointermove', handlePointerMove);
   }, []);
+
+  const handleClick = () => {
+    CursorService.instance.leave;
+    if (onClick) onClick();
+  }
 
   const handlePointerMove = (event: PointerEvent) => {
     const rect = buttonRef.current?.getBoundingClientRect();
@@ -35,7 +44,7 @@ export default function Button ({handleClick, tooltip, children}: ButtonProps) {
   const handlePointerLeave = () => {
     if (buttonRef && buttonRef.current) {
       gsap.killTweensOf(buttonRef.current, "--size");
-      gsap.to(buttonRef.current, { duration: .2, ease: Power3.easeInOut, '--size': '10px' });
+      gsap.to(buttonRef.current, { duration: .4, ease: Power3.easeInOut, '--size': '10px' });
       CursorService.instance.leave()
     }
   }
@@ -43,11 +52,11 @@ export default function Button ({handleClick, tooltip, children}: ButtonProps) {
   const getSize = (rect: DOMRect): number => {
     const { width: width, height: height } = rect;
     const h = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
-    return (h / Math.max(width, height)) * 150;
+    return (h / Math.max(width, height)) * 165;
   }
   
   return (
-    <button ref={buttonRef} role="button" 
+    <button ref={buttonRef} role="button" className={CLASSES.HOST}
             onClick={handleClick}
             onPointerEnter={() => handlePointerEnter()}
             onPointerLeave={() => handlePointerLeave()}>

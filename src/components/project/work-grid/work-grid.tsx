@@ -3,7 +3,7 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import { CursorControl } from "../../cursor/Cursor";
 import WorkCategorySelector from "../work-category-selector/work-category-selector";
 import { gsap, Power3 } from "gsap";
-import WorkThumbnail, { CLASSES as WORK_THUMBNAIL_CLASSES } from "../work-thumbnail/work-tumbnail";
+import WorkThumbnail, { CLASSES as WORK_THUMBNAIL_CLASSES } from "../../work-thumbnail/work-tumbnail";
 import worksData from "../../../assets/jsons/works.json";
 
 

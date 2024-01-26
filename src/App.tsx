@@ -1,20 +1,19 @@
 import "./App.scss";
 import { useEffect, useRef, useState } from "react";
 import LoaderSection, { LoaderSectionControl } from "./sections/loader/loader.section";
-import IWork from "./interfaces/work.interface";
 import FileService from "./services/file.service";
 import CoverSection from "./sections/cover/cover.section";
-import WorkSection from "./sections/work/work.section";
+import WorkSection, { IDS } from "./sections/work/work.section";
 import Cursor from "./components/cursor/Cursor";
 import WorkService from "./services/work.service";
+import IThumbnailWork from "./interfaces/thumbnail-work.interface";
 
 function App(){
-  //const cursorRef = useRef<CursorControl>(null);
   const loaderSectionRef = useRef<LoaderSectionControl>(null);
   const loadingProgressCounterRef = useRef<number>(0);
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
-  const workListRef = useRef<IWork[]>([]);
-  const [workList, setWorkList] = useState<IWork[]>([]);
+  const workListRef = useRef<IThumbnailWork[]>([]);
+  const [workList, setWorkList] = useState<IThumbnailWork[]>([]);
 
   useEffect(() => {
     loadingProgressCounterRef.current = 0;
@@ -32,21 +31,22 @@ function App(){
       if (work.imagesRefs && work.imagesRefs.length > 0) {
         FileService.instance.getImage(`projects/${work.id}/${work.imagesRefs[0]}`).subscribe({
           next: img => {
-            console.log(img)
-            handleImagePreloaded(); 
+            console.log(img);
+            handleImagePreloaded(work, img); 
           },
           error: error => {
             console.log(error);
-            handleImagePreloaded();
+            handleImagePreloaded(work);
           }
         });
       } 
     });
   }
 
-  const handleImagePreloaded = () => {
+  const handleImagePreloaded = (work: IThumbnailWork, img?: string) => {
     loadingProgressCounterRef.current ++;
     setLoadingProgress(loadingProgressCounterRef.current/workListRef.current.length);
+    work.thumbnail = img;
 
     if (loadingProgressCounterRef.current === workListRef.current.length && loaderSectionRef?.current) {
       setWorkList(workListRef.current);
@@ -65,12 +65,10 @@ function App(){
         <LoaderSection ref={loaderSectionRef} loadingPercentage={Math.floor(loadingProgress * 100)}/>
         { workList && workList.length > 0 ?
             <>
-              <CoverSection nextSelector={'#work-grid'} />
+              <CoverSection nextSelector={`#${IDS.SECTION}`} />
               <WorkSection workList={workList}/>
               <Cursor />
             </> : ''}
-
-        
       </main>
     </>
   )

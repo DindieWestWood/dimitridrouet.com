@@ -49,7 +49,7 @@ const CoverSection = forwardRef<CoverSectionControls, CoverSectionProps>(({nextS
         <p className={GENERAL_CLASSES.HEADLINE_DESCRIPTION}>Welcome to my website! I'm Dimitri I'm a UI/UX Designer, Poladict, Podcasts Maker and Music Enthousiatic.</p>
       </div>
   
-      <Button handleClick={() => ScrollService.instance.scrollTo(nextSelector)}>
+      <Button onClick={() => ScrollService.instance.scrollTo(nextSelector)}>
         <span>Next</span>
         <ArrowDownToDot size={20} strokeWidth={2} />
       </Button>
