@@ -4,10 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dimitri Drouet's Portfolio</title>
+    <link href="/src/assets/stylesheets/preloader.scss" rel="stylesheet"/>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/assets/scripts/firebase.ts"></script>
-    <script type="module" src="/src/main.tsx"></script>
+    <section id="loader-section">
+      <div class="loader-grid">
+        <div class="loader-info-container">
+          <p class="index">drouetdimitri.com</p>
+          <h1 class="display">Welcome</h1>
+          <p class="headline">Gathering the finest details of my portfolio. Hold tight, it's worth the wait!</p>
+        </div>
+        <div class="loader-loadbar-container">
+          <div class="loadbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0%">
+            <p class="display" aria-hidden="true">0%</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <main id="root" role="main"></main>
+    <script type="module" src="src/assets/scripts/preloader.ts"></script>
+    <!-- <script type="module" src="/src/assets/scripts/firebase.ts"></script> -->
+    <!-- <script type="module" src="/src/main.tsx"></script> -->
   </body>
 </html>

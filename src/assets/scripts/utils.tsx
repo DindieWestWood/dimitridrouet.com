@@ -7,7 +7,7 @@ export const CLASSES = {
   BACKGROUND_SHAPE: 'background-shape',
   DISPLAY: 'display',
   EMOJI: 'emoji',
-  HEADLINE_DESCRIPTION: 'headline-description',
+  HEADLINE: 'headline',
   INDEX: 'index',
   ONE_LINE: 'one-line',
   HIDDEN: 'hidden'

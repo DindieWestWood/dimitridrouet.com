@@ -1,4 +1,3 @@
-import { ForwardedRef, forwardRef, useImperativeHandle } from "react";
 import "./cover.section.scss";
 import Button from "../../components/button/Button";
 import ScrollService from "../../services/scroll.service";
@@ -6,38 +5,52 @@ import { ArrowDownToDot } from "lucide-react";
 import DragAndDropContainer from "../../components/drag-and-drop/container/Drag-and-drop-container";
 import HoverEffect from "../../components/effects/hover-effect/hover-effect";
 
+import { useGSAP } from "@gsap/react";
+
 import PROFILE_PICTURE from '../../assets/images/profile-picture.jpg';
 import { CLASSES as GENERAL_CLASSES } from "../../assets/scripts/utils";
+import { CLASSES as BUTTON_CLASSES } from "../../components/button/Button";
+import { CLASSES as DRAG_AND_DROP_CLASSES } from "../../components/drag-and-drop/container/Drag-and-drop-container"; 
+import gsap, { Back, Power3 } from "gsap";
+import { useRef } from "react";
 
 const IDS = {
   SECTION: 'cover-section',
   HEADLINE: 'cover-headline',
-  SCROLL_INVITE: 'scroll-invite'
+  SCROLL_INVITE: 'scroll-invite',
+  HEY: 'hey'
 }
 
 const CLASSES = {
-  WAVING_HAND: 'waving-hand'
-}
-
-export interface CoverSectionControls {
-  show: () => void
+  WAVING_HAND: 'waving-hand',
+  HIDDEN_TEXT: 'hidden-text',
+  NTSY: 'ntsy'
 }
 
 export interface CoverSectionProps {
   nextSelector: string,
 }
 
-const CoverSection = forwardRef<CoverSectionControls, CoverSectionProps>(({nextSelector}: CoverSectionProps, ref: ForwardedRef<CoverSectionControls>) => {
-  useImperativeHandle(ref, () => ({
-    show: show
-  }));
+export default function CoverSection({nextSelector}: CoverSectionProps) {
+  const container = useRef<HTMLElement>(null);
+  const hey = useRef(null);
+  const ntsy = useRef(null);
 
-  const show = () => {
-    
-  }
+  useGSAP(() => {
+    const wavingHand = container?.current?.querySelector(`.${GENERAL_CLASSES.EMOJI} > span`);
+
+    gsap.timeline()
+      .to(hey.current, { delay: .5, duration: .3, ease: Back.easeOut.config(4), opacity: 1, y: 0, rotate: 0  }, 'step-1')
+      .to(`.${GENERAL_CLASSES.EMOJI} > span`, { delay: .6, duration: .4, ease: Back.easeOut.config(3), y: 0, onComplete: () => wavingHand?.classList.add(CLASSES.WAVING_HAND)}, 'step-1')
+      .to(`.${CLASSES.NTSY} > span`, { delay: .8, duration: .3, stagger: .1, ease: Back.easeOut.config(3), opacity: 1, y: 0, rotate: 0}, 'step-1')
+      .to(`.${DRAG_AND_DROP_CLASSES.HOST}`, { delay: .4, duration: .4, ease: Back.easeOut.config(2), opacity: 1, y: 0 }, 'step-1')
+      .to(`.${GENERAL_CLASSES.HEADLINE}`, { delay: .5, duration: .4, ease: Back.easeOut.config(2), opacity: 1, y: 0, rotate: 0 }, 'step-1')
+      .to(`.${GENERAL_CLASSES.INDEX}`, { delay: .6, duration: .4, ease: Power3.easeInOut, opacity: 1, y: 0 }, 'step-1')
+      .to(`.${BUTTON_CLASSES.HOST}`, { delay: .7, duration: .4, ease: Back.easeOut.config(2), opacity: 1, y: 0 }, 'step-1')
+  }, { scope: container });
 
   return (
-    <section id={IDS.SECTION}>
+    <section id={IDS.SECTION} ref={container} >
       <div id={IDS.HEADLINE}>
         <p className={GENERAL_CLASSES.INDEX} aria-hidden="true">001/</p>
         <DragAndDropContainer width="200px" height="200px" message="The picture was here" placeholderTooltip="Click to reset" targetTooltip="Drag me">
@@ -45,8 +58,22 @@ const CoverSection = forwardRef<CoverSectionControls, CoverSectionProps>(({nextS
             <img src={PROFILE_PICTURE} alt=''/>
           </HoverEffect>
         </DragAndDropContainer>
-        <h1 className={GENERAL_CLASSES.DISPLAY}>Hey! <span className={[GENERAL_CLASSES.EMOJI, CLASSES.WAVING_HAND].join(" ")} aria-hidden="true">👋</span> Nice to see you!</h1>
-        <p className={GENERAL_CLASSES.HEADLINE_DESCRIPTION}>Welcome to my website! I'm Dimitri I'm a UI/UX Designer, Poladict, Podcasts Maker and Music Enthousiatic.</p>
+        <h1 className={GENERAL_CLASSES.DISPLAY}>
+          <span ref={hey} className={CLASSES.HIDDEN_TEXT}>Hey!</span>
+          <span className={GENERAL_CLASSES.EMOJI} aria-hidden="true">
+            <span>👋</span>
+          </span>
+          <span className={CLASSES.NTSY}>
+            <span className={CLASSES.HIDDEN_TEXT}>Nice</span>
+            <span className={CLASSES.HIDDEN_TEXT}>to</span>
+            <span className={CLASSES.HIDDEN_TEXT}>see</span>
+            <span className={CLASSES.HIDDEN_TEXT}>you!</span>
+          </span>
+        </h1>
+        <p className={[GENERAL_CLASSES.HEADLINE, CLASSES.HIDDEN_TEXT].join(" ")}>
+          Welcome to my website!
+          I'm Dimitri, I'm a UI/UX Designer, Poladict, Podcasts Maker and Music Enthousiatic.
+        </p>
       </div>
   
       <Button onClick={() => ScrollService.instance.scrollTo(nextSelector)}>
@@ -59,8 +86,4 @@ const CoverSection = forwardRef<CoverSectionControls, CoverSectionProps>(({nextS
       </div>
     </section>
   );
-});
-
-export default CoverSection
-
-{/*  */}
+}

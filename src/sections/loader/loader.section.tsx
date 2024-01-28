@@ -1,70 +1,86 @@
-import gsap, { Power3 } from "gsap";
-import { CLASSES as GENERAL_CLASSES } from "../../assets/scripts/utils";
-import Loadbar from "../../components/loadbar/loadbar";
-import "./loader.section.scss";
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+// import gsap, { Power3 } from "gsap";
+// import { CLASSES as GENERAL_CLASSES } from "../../assets/scripts/utils";
+// import Loadbar from "../../components/loadbar/loadbar";
+// import "./loader.section.scss";
+// import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 
-const IDS = {
-  SECTION: 'loader-section'
-}
+// const IDS = {
+//   SECTION: 'loader-section'
+// }
 
-const CLASSES = {
-  GRID: 'loader-section-grid',
-  LOADER_INFO_CONTAINER: 'loader-info-container',
-  LOADBAR_CONTAINER: 'loader-loadbar-container',
-}
+// const CLASSES = {
+//   GRID: 'loader-section-grid',
+//   LOADER_INFO_CONTAINER: 'loader-info-container',
+//   LOADBAR_CONTAINER: 'loader-loadbar-container',
+// }
 
-export interface LoaderSectionControl {
-  close: (callback?: () => void) => void;
-}
+// export interface LoaderSectionControl {
+//   close: (callback?: () => void) => void;
+// }
 
-export interface LoaderSectionProps  {
-  loadingPercentage: number;
-}
+// export interface LoaderSectionProps  {
+//   loadingPercentage: number;
+// }
 
-const LoaderSection = forwardRef<LoaderSectionControl, LoaderSectionProps>(({loadingPercentage}: LoaderSectionProps, ref) => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [loaded, setLoaded] = useState(false);
+// const LoaderSection = forwardRef<LoaderSectionControl, LoaderSectionProps>(({loadingPercentage}: LoaderSectionProps, ref) => {
+//   const sectionRef = useRef<HTMLElement>(null);
+//   const [loaded, setLoaded] = useState(false);
 
-  useImperativeHandle(ref, () => ({
-    close: hideAnimation
-  }));
+//   useImperativeHandle(ref, () => ({
+//     close: hideAnimation
+//   }));
 
-  useEffect(() => {
-    if (sectionRef) {
-      gsap.killTweensOf(sectionRef.current, "--progress");
-      gsap.to(sectionRef.current, { duration: .2, ease: Power3.easeInOut, "--progress": loadingPercentage / 100});
-    }
-  }, [loadingPercentage]);
+//   useEffect(() => {
+//     if (sectionRef) {
+//       gsap.killTweensOf(sectionRef.current, "--progress");
+//       gsap.to(sectionRef.current, { duration: .2, ease: Power3.easeInOut, "--progress": loadingPercentage / 100});
+//     }
+//   }, [loadingPercentage]);
 
-  const hideAnimation = (callback?: () => void) => {
-    const timeline = gsap.timeline();
+//   const hideAnimation = (callback?: () => void) => {
+//     const timeline = gsap.timeline();
 
-    timeline.to(sectionRef.current, { delay: .2, duration: .8, opacity: 0 });
-    timeline.call(() => {
-      setLoaded(true);
-      if (callback) callback();
-    });
-  }
+//     timeline.to(sectionRef.current, { delay: .2, duration: .8, opacity: 0 });
+//     timeline.call(() => {
+//       setLoaded(true);
+//       if (callback) callback();
+//     });
+//   }
 
-  return (
-    !loaded ? 
-      <section ref={sectionRef} id={IDS.SECTION}>
-        <div className={CLASSES.GRID}>
-          <div className={CLASSES.LOADER_INFO_CONTAINER}>
-            <p className={GENERAL_CLASSES.INDEX}>dimitridrouet.com</p>
-            <h1 className={GENERAL_CLASSES.DISPLAY}>Welcome</h1>
-            <p className={GENERAL_CLASSES.HEADLINE_DESCRIPTION}>Gathering the finest details of my portfolio. Hold tight, it's worth the wait!</p>
-          </div>
-          <div className={CLASSES.LOADBAR_CONTAINER}>
-            <Loadbar value={loadingPercentage}/>
-          </div>
-        </div>
-      </section> : 
-      <div className={GENERAL_CLASSES.ACCESSIBILITY_TEXT} role="alert">
-        <p>Website ready to be explored</p>
-      </div>
+//   return (
+//     !loaded ? 
+//       <section ref={sectionRef} id={IDS.SECTION}>
+//         <div className={CLASSES.GRID}>
+//           <div className={CLASSES.LOADER_INFO_CONTAINER}>
+//             <p className={GENERAL_CLASSES.INDEX}>dimitridrouet.com</p>
+//             <h1 className={GENERAL_CLASSES.DISPLAY}>Welcome</h1>
+//             <p className={GENERAL_CLASSES.HEADLINE_DESCRIPTION}>Gathering the finest details of my portfolio. Hold tight, it's worth the wait!</p>
+//           </div>
+//           <div className={CLASSES.LOADBAR_CONTAINER}>
+//             <Loadbar value={loadingPercentage}/>
+//           </div>
+//         </div>
+//       </section> : 
+//       <div className={GENERAL_CLASSES.ACCESSIBILITY_TEXT} role="alert">
+//         <p>Website ready to be explored</p>
+//       </div>
+//   );
+// });
+
+// export default LoaderSection;
+
+import './loader.section.scss';
+import { useState } from "react";
+
+export const ID = 'loader-section';
+
+export default function LoaderSection() {
+  const [loaded, setLoaded] = useState<boolean>(false);
+  return !loaded ? (
+    <section id={ID}>
+
+    </section>
+  ) : (
+    <></>
   );
-});
-
-export default LoaderSection;
+}

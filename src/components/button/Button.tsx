@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, forwardRef, useEffect, useRef } from "react";
 import "./Button.scss";
 import { Power3, gsap } from "gsap";
 import { CursorTriggerProps } from "../../assets/scripts/utils";
@@ -8,12 +8,15 @@ export const CLASSES = {
   HOST: "button"
 }
 
+export interface ButtonControls {}
+
 export interface ButtonProps extends CursorTriggerProps {
   onClick?: () => void,
   children?: ReactNode,
 }
 
-export default function Button ({onClick, tooltip, children}: ButtonProps) {  
+// const CursorPointer = forwardRef<CursorPointerControls, CursorPointerProps>((props, ref) => {
+const Button = forwardRef<ButtonControls, ButtonProps>((props, ref) => {  
   const buttonRef = useRef<HTMLButtonElement>(null);
   
   useEffect(() => {
@@ -22,7 +25,7 @@ export default function Button ({onClick, tooltip, children}: ButtonProps) {
 
   const handleClick = () => {
     CursorService.instance.leave;
-    if (onClick) onClick();
+    if (props.onClick) props.onClick();
   }
 
   const handlePointerMove = (event: PointerEvent) => {
@@ -37,7 +40,7 @@ export default function Button ({onClick, tooltip, children}: ButtonProps) {
       const size = getSize(buttonRef.current.getBoundingClientRect());
       gsap.killTweensOf(buttonRef.current, "--size");
       gsap.to(buttonRef.current, { duration: .2, ease: Power3.easeInOut, '--size': `${size}px` });
-      CursorService.instance.enter(tooltip)
+      CursorService.instance.enter(props.tooltip)
     }
   }
 
@@ -60,7 +63,9 @@ export default function Button ({onClick, tooltip, children}: ButtonProps) {
             onClick={handleClick}
             onPointerEnter={() => handlePointerEnter()}
             onPointerLeave={() => handlePointerLeave()}>
-        {children}
+        {props.children}
     </button>
   );
-}
+});
+
+export default Button;

@@ -19,6 +19,8 @@
   overflow: hidden;
   z-index: $button-elevation;
 
+  width: fit-content;
+
   border-radius: $button-radius;
   background-color: $main-500;
   color: $main-50;

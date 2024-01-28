@@ -4,6 +4,54 @@
   position: relative;
   justify-content: center;
   gap: 2rem;
+
+  .drag-and-drop-container {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+
+  .index {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  .hidden-text {
+    opacity: 0;
+    transform-origin: top left;
+    transform: translateY(2rem) rotate(3deg);
+  }
+
+  .ntsy {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: max(2vw, 1rem);
+  }
+
+  h1 {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .emoji {
+    display: inline-flex;
+    clip-path: polygon(-20% -20%, 120% -20%, 120% 100%, -20% 100%);
+
+    span {
+      display: block;
+      transform: translateY(100%);
+    }
+  }
+
+  // .emoji {
+  //   opacity: 0;
+  // }
+
+  .button {
+    opacity: 0;
+    transform: translateY(1rem);
+  } 
 }
 
 #cover-headline {
