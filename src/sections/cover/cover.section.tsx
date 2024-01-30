@@ -34,7 +34,6 @@ export interface CoverSectionProps {
 export default function CoverSection({nextSelector}: CoverSectionProps) {
   const container = useRef<HTMLElement>(null);
   const hey = useRef(null);
-  const ntsy = useRef(null);
 
   useGSAP(() => {
     const wavingHand = container?.current?.querySelector(`.${GENERAL_CLASSES.EMOJI} > span`);
@@ -42,8 +41,8 @@ export default function CoverSection({nextSelector}: CoverSectionProps) {
     gsap.timeline()
       .to(hey.current, { delay: .5, duration: .3, ease: Back.easeOut.config(4), opacity: 1, y: 0, rotate: 0  }, 'step-1')
       .to(`.${GENERAL_CLASSES.EMOJI} > span`, { delay: .6, duration: .4, ease: Back.easeOut.config(3), y: 0, onComplete: () => wavingHand?.classList.add(CLASSES.WAVING_HAND)}, 'step-1')
-      .to(`.${CLASSES.NTSY} > span`, { delay: .8, duration: .3, stagger: .1, ease: Back.easeOut.config(3), opacity: 1, y: 0, rotate: 0}, 'step-1')
-      .to(`.${DRAG_AND_DROP_CLASSES.HOST}`, { delay: .4, duration: .4, ease: Back.easeOut.config(2), opacity: 1, y: 0 }, 'step-1')
+      .to(`.${CLASSES.NTSY}`, { delay: .8, duration: .3, stagger: .1, ease: Back.easeOut.config(3), opacity: 1, y: 0, rotate: 0}, 'step-1')
+      //.to(`.${DRAG_AND_DROP_CLASSES.HOST}`, { delay: .4, duration: .4, ease: Back.easeOut.config(2), opacity: 1, y: 0 }, 'step-1')
       .to(`.${GENERAL_CLASSES.HEADLINE}`, { delay: .5, duration: .4, ease: Back.easeOut.config(2), opacity: 1, y: 0, rotate: 0 }, 'step-1')
       .to(`.${GENERAL_CLASSES.INDEX}`, { delay: .6, duration: .4, ease: Power3.easeInOut, opacity: 1, y: 0 }, 'step-1')
       .to(`.${BUTTON_CLASSES.HOST}`, { delay: .7, duration: .4, ease: Back.easeOut.config(2), opacity: 1, y: 0 }, 'step-1')
@@ -51,29 +50,27 @@ export default function CoverSection({nextSelector}: CoverSectionProps) {
 
   return (
     <section id={IDS.SECTION} ref={container} >
-      <div id={IDS.HEADLINE}>
-        <p className={GENERAL_CLASSES.INDEX} aria-hidden="true">001/</p>
-        <DragAndDropContainer width="200px" height="200px" message="The picture was here" placeholderTooltip="Click to reset" targetTooltip="Drag me">
+      <div className={GENERAL_CLASSES.HEADLINE_CONTAINER}>
+        <p className={GENERAL_CLASSES.INDEX} aria-hidden="true">dimitridrouet.com</p>
+        {/* <DragAndDropContainer width="200px" height="200px" message="The picture was here" placeholderTooltip="Click to reset" targetTooltip="Drag me">
           <HoverEffect width="100%" height="100%" >
             <img src={PROFILE_PICTURE} alt=''/>
           </HoverEffect>
-        </DragAndDropContainer>
+        </DragAndDropContainer> */}
         <h1 className={GENERAL_CLASSES.DISPLAY}>
           <span ref={hey} className={CLASSES.HIDDEN_TEXT}>Hey!</span>
           <span className={GENERAL_CLASSES.EMOJI} aria-hidden="true">
             <span>👋</span>
           </span>
-          <span className={CLASSES.NTSY}>
-            <span className={CLASSES.HIDDEN_TEXT}>Nice</span>
-            <span className={CLASSES.HIDDEN_TEXT}>to</span>
-            <span className={CLASSES.HIDDEN_TEXT}>see</span>
-            <span className={CLASSES.HIDDEN_TEXT}>you!</span>
-          </span>
+          <span className={[CLASSES.HIDDEN_TEXT, CLASSES.NTSY].join(" ")}>Nice</span>
+          <span className={[CLASSES.HIDDEN_TEXT, CLASSES.NTSY].join(" ")}>to</span>
+          <span className={[CLASSES.HIDDEN_TEXT, CLASSES.NTSY].join(" ")}>see</span>
+          <span className={[CLASSES.HIDDEN_TEXT, CLASSES.NTSY].join(" ")}>you!</span>
         </h1>
-        <p className={[GENERAL_CLASSES.HEADLINE, CLASSES.HIDDEN_TEXT].join(" ")}>
+        {/* <p className={[GENERAL_CLASSES.HEADLINE, CLASSES.HIDDEN_TEXT].join(" ")}>
           Welcome to my website!
           I'm Dimitri, I'm a UI/UX Designer, Poladict, Podcasts Maker and Music Enthousiatic.
-        </p>
+        </p> */}
       </div>
   
       <Button onClick={() => ScrollService.instance.scrollTo(nextSelector)}>

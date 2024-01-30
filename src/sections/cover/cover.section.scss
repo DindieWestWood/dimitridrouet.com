@@ -3,22 +3,10 @@
 #cover-section {
   position: relative;
   justify-content: center;
-  gap: 2rem;
 
   .drag-and-drop-container {
     opacity: 0;
     transform: translateY(2rem);
-  }
-
-  .index {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-
-  .hidden-text {
-    opacity: 0;
-    transform-origin: top left;
-    transform: translateY(2rem) rotate(3deg);
   }
 
   .ntsy {
@@ -30,7 +18,7 @@
   h1 {
     display: flex;
     flex-wrap: wrap;
-    column-gap: 2rem;
+    column-gap: max(2vw, 1rem);
     margin-top: 1rem;
   }
 
@@ -54,12 +42,7 @@
   } 
 }
 
-#cover-headline {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: .5rem;
-}
+
 
 #scroll-invite {
   position: absolute;

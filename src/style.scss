@@ -41,10 +41,10 @@ h1 {
   font-weight: 500;
 
   &.display {
-    font-size: max(12vw, 5.4rem);//min(max(10vw, 3.5rem), 14rem);
+    font-size: max(24vw, 5.4rem);//min(max(10vw, 3.5rem), 14rem);
 
     .emoji {
-      font-size: max(9vw, 4.05rem);//min(max(8.3vw, 3rem), 11rem);
+      font-size: max(13vw, 4.05rem);//min(max(8.3vw, 3rem), 11rem);
     }
   }
 }
@@ -85,6 +85,19 @@ button {
   &:focus-visible {
     outline-color: $main-950;
   }
+}
+
+.headline-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: .5rem;
+}
+
+.hidden-text {
+  opacity: 0;
+  transform-origin: top left;
+  transform: translateY(2rem) rotate(3deg);
 }
 
 // .index {

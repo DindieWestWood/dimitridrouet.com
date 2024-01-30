@@ -1,12 +1,17 @@
 import Cursor from "./components/cursor/Cursor";
+import IThumbnailWork from "./interfaces/thumbnail-work.interface";
 import CoverSection from "./sections/cover/cover.section";
+import WorkSection, { IDS as WORK_IDS } from "./sections/work/work.section";
 
-export default function App() {
-  
-  
+export interface AppProps {
+  workList: IThumbnailWork[];
+}
+
+export default function App({workList}: AppProps) {
   return (
     <> 
-      <CoverSection nextSelector={''}/>
+      <CoverSection nextSelector={`#${WORK_IDS.SECTION}`}/>
+      <WorkSection workList={workList}/>
       <Cursor/>
     </>
   );

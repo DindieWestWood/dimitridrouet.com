@@ -7,10 +7,12 @@ export const CLASSES = {
   BACKGROUND_SHAPE: 'background-shape',
   DISPLAY: 'display',
   EMOJI: 'emoji',
+  HEADLINE_CONTAINER: 'headline-container',
   HEADLINE: 'headline',
   INDEX: 'index',
   ONE_LINE: 'one-line',
-  HIDDEN: 'hidden'
+  HIDDEN: 'hidden',
+  HIDDEN_TEXT: 'hidden-text'
 }
 
 export interface Position {

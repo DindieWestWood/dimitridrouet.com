@@ -5,6 +5,10 @@ import FileService from "../../services/file.service";
 import WorkService from "../../services/work.service";
 import { CLASSES as GENERAL_CLASSES } from "./utils";
 import "../../style.scss";
+import ScrollService from "../../services/scroll.service";
+import ReactDOM from 'react-dom/client'
+import App from "../../App";
+import { ScrollTrigger } from "gsap/all";
 
 const LOADER_SECTION_ID = 'loader-section';
 
@@ -59,8 +63,7 @@ const updateLoadingProgress = () => {
 const load = () => {
   console.log ("LOAD");
 
-  const script = getMainScript();
-  document.querySelector('body')?.appendChild(script);
+  init();
 
   const style = getStylesheet();
   document.querySelector('head')?.appendChild(style);
@@ -77,11 +80,14 @@ const handleLoaderHidden = () => {
   if (alert) main?.appendChild(alert);
 }
 
-const getMainScript = () => {
-  const script = document.createElement('script');
-  script.setAttribute('src', 'src/main.tsx');
-  script.setAttribute('type', 'module');
-  return script;
+const init = () => {
+  //Initialises lenis scroll;
+  ScrollService.instance;
+  gsap.registerPlugin(ScrollTrigger); 
+
+  ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+    <App workList={workList} />,
+  )
 }
 
 const getStylesheet = () => {
