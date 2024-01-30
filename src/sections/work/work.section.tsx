@@ -5,6 +5,7 @@ import IWork from "../../interfaces/work.interface";
 import "./work.section.scss"
 import gsap from "gsap";
 import { useRef } from "react";
+import Tab from "../../components/tab/tab";
 
 export const IDS = {
   SECTION: 'work-section',
