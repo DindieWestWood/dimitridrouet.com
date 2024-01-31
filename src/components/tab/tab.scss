@@ -3,76 +3,51 @@
 @import "../../assets/stylesheets/colors.scss";
 @import "../../assets/stylesheets/shadows.scss";
 
-$handle-size: .5rem;
+$handle-size: .5em;
 
-
-.tab {
+.tab, .tab-overlay {
   display: flex;
-  width: fit-content;
+  align-items: center;
+  
   padding-top: $common-medium-padding;
-  padding-left: $common-medium-padding * 2 + $handle-size;
-  padding-right: $common-medium-padding;
+  padding-left: $common-medium-padding;
+  padding-right: $common-medium-padding * 2 + $handle-size;
   padding-bottom: $common-medium-padding;
 
   border-radius: $button-radius;
-  
+}
 
-  &:hover {
-    .tab-overlay {
-      clip-path: circle($handle-size/2 at $common-medium-padding + $handle-size/2 50%);
-    }
-  }
-
-  &.active {
-    box-shadow: $shadow;
-    pointer-events: none;
-
-    .tab-overlay {
-      background-color: $main-500;
-      clip-path: circle(150% at $common-medium-padding + $handle-size/2 50%);
-
-      &::before {
-        scale: 1;
-      }
-    }
-  }
+.tab {
+  position: relative;
+  width: fit-content;
+  box-shadow: $shadow-none;
 }
 
 .tab-overlay {
+  --background-size: 0px;
+  --after-scale: 0;
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-
-  display: flex;
-  width: fit-content;
-  padding-top: $common-medium-padding;
-  padding-left: $common-medium-padding * 2 + $handle-size;
-  padding-right: $common-medium-padding;
-  padding-bottom: $common-medium-padding;
 
   border-radius: $button-radius;
 
   background-color: $dark-primary-text;
   color: $light-primary-text;
 
-  clip-path: circle(0 at $common-medium-padding + $handle-size/2 50%);
-  transition: clip-path 100ms ease-out;
+  clip-path: circle(var(--background-size) at calc(100% - calc($common-medium-padding + calc($handle-size / 2))) 50%);
 
-  &::before {
+  &::after {
     content: "";
     position: absolute;
     z-index: 2;
-    left: $common-medium-padding;
+    right: $common-medium-padding;
     width: $handle-size;
     height: $handle-size;
     background-color: $light-primary-text;
     border-radius: 50%;
 
     transform-origin: center;
-    scale: 0;
-
-    transition: color ease-in-out 200ms,
-                scale 200ms;
+    scale: var(--after-scale);
   }
 }
+

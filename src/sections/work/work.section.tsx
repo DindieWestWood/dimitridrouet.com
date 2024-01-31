@@ -5,10 +5,12 @@ import IWork from "../../interfaces/work.interface";
 import "./work.section.scss"
 import gsap from "gsap";
 import { useRef } from "react";
-import Tab from "../../components/tab/tab";
+import Tabs from "../../components/tabs/tabs";
+import ITab from "../../interfaces/tab.interface";
 
 export const IDS = {
   SECTION: 'work-section',
+  TABS: 'work-category-tabs',
   GRID: 'work-grid'
 }
 
@@ -18,7 +20,10 @@ export interface WorkSectionProps {
 
 export default function WorkSection ({workList} : WorkSectionProps) {
   const container = useRef(null);
-  const ID = 'work-grid';
+  const tabs: ITab[] = [
+    { id: 'projects', label: 'Projects', content: null },
+    { id: 'lab', label: 'Lab', content: null}
+  ]
 
   useGSAP(() => {
     gsap.timeline({
@@ -43,8 +48,9 @@ export default function WorkSection ({workList} : WorkSectionProps) {
     <section id={IDS.SECTION} ref={container}>
       <div className={GENERAL_CLASSES.HEADLINE_CONTAINER}>
         <p className={GENERAL_CLASSES.INDEX} aria-hidden='true'>002/</p>
-        <h1 id={`${ID}-label`} className={GENERAL_CLASSES.DISPLAY}>Work</h1> 
+        <h1 id={`${IDS.TABS}-label`} className={GENERAL_CLASSES.DISPLAY}>Work</h1> 
       </div>
+      <Tabs id={IDS.TABS} tabs={tabs} labelledBy={`${IDS.TABS}-label`}/>
       {/* <WorkGrid id={ID} workList={workList}/> */}
     </section>
   );
